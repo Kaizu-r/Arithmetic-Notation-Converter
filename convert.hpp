@@ -60,6 +60,22 @@ int isOperator(char c){
     return 0;
 }
 
+Token toOperator(char c){
+    switch(c){
+        case '+':
+            return ADD;
+        case '-':
+            return SUBTRACT;
+        case '*':
+            return MULTIPLY;
+        case '/':
+            return DIVIDE;
+        case '^':
+            return POW;
+        case '%':
+            return MOD;
+    }
+}
 void tokenize(Token *t, float* nums, std::string str){
     int num_top = -1;
     int token_top = -1;
