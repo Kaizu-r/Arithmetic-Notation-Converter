@@ -1,5 +1,5 @@
-#ifndef CONVERT_H
-#define CONVERT_H
+#ifndef TOKENIZER_H
+#define TOKENIZER_H
 
 #include<iostream>
 #include<algorithm>
