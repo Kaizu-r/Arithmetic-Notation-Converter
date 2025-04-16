@@ -1,5 +1,6 @@
 #include<iostream>
 #include "tokenizer.hpp"
+#include "convert.hpp"
 
 int main(){
     std::string str;
@@ -33,5 +34,26 @@ int main(){
             printTok(t[i]);
         i++;
     }
+
+    std::cout << std::endl;
+    inToPost(t, num, coeff, t);
+
+    i = 0;
+    j = 0, k = 0, l = 0;
+    while(t[i] != END){
+        if(t[i] == DIGIT){
+            std::cout << num[j++] << ' ';
+        }
+        else if(t[i] == COEFFICIENT)
+            std::cout << coeff[k++];
+        else if(t[i] == VAR)
+            std::cout << var[l++] << ' ';
+        else
+            printTok(t[i]);
+        i++;
+    }
     
+    std::cout << std::endl;
+
+    return 0;
 }
