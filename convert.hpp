@@ -170,7 +170,7 @@ void printTok(Token t){
             std::cout << "END";
             break;
     }
-    std::cout << std::endl;
+    std::cout << ' ';
 }
 
 
