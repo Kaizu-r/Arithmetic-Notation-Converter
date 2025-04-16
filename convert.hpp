@@ -80,10 +80,12 @@ void inToPost(Token *t, float *nums, float *coeff, Token* queue){
             }
             if(tok_top != -1)
                 tok_top--;
+            t++;
         }
     }
     while(tok_top > -1)
-        queue[++rear] = tokStack[tok_top--];    //pop the rest of ir
+        queue[++rear] = tokStack[tok_top--];    //pop the rest of it
+    queue[++rear] = END;
 }
 
 
