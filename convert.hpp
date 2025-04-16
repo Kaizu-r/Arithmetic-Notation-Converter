@@ -92,8 +92,15 @@ void tokenize(Token *t, float* nums, std::string str){
 
             //need to add float part here or maybe on different if
         }
-        
+        else if(isOperator(str.at(i)))
+            t[++token_top] = toOperator(str.at(i));
+        else if(str.at(i) == '(')
+            t[++token_top] = LEFT_P;
+        else if(str.at(i) == ')')
+            t[++token_top] = RIGHT_p;
+        i++;
     }
+    t[++token_top] = END;
 }
 
 
