@@ -110,8 +110,11 @@ void tokenize(Token *t, float* nums, float* coeff, char *var,  std::string str){
                 t[++token_top] = COEFFICIENT;
                 t[++token_top] = VAR;
             }
-            else
+            else{
                 t[++token_top] = DIGIT;
+                nums[++num_top] = num; 
+            }
+                
 
         }
         else if(isVar(str.at(i))){
