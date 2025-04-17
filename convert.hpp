@@ -103,7 +103,13 @@ void freeTree(Node **r){
 }
 
 Node* createNode(Token t){
-
+    Node* n = (Node*) malloc(sizeof(Node));
+    n->t = t;
+    n->left = nullptr;
+    n->right = nullptr;
+    return n;
 }
+
+
 
 #endif
