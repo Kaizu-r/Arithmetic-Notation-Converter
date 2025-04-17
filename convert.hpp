@@ -2,7 +2,14 @@
 #define CONVERT_H
 
 #include <iostream>
+#include <stdlib.h>
 #include "tokenizer.hpp"
+
+typedef struct node{
+    Token t;
+    struct node* left;
+    struct node* right;
+}Node;
 
 int precedence(Token t){
     switch(t){
@@ -88,6 +95,15 @@ void inToPost(Token *t, float *nums, float *coeff, Token* queue){
     queue[++rear] = END;
 }
 
+void freeTree(Node **r){
+    if(*r == NULL)
+        return;
+    freeTree(&(*r)->left);
+    freeTree(&(*r)->right);
+}
 
+Node* createNode(Token t){
+
+}
 
 #endif
