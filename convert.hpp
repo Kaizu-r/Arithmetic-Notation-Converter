@@ -95,6 +95,68 @@ void inToPost(Token *t, float *nums, float *coeff, Token* queue){
     queue[++rear] = END;
 }
 
+void postToIn(Token *t, float *nums, float *coeff, Token* queue){
+    Token digits[100];
+    Token ops[100];
+    Token temp_stack[100];
+    int tempTop = -1;    
+    int dTop, oFront, oRear, qRear;
+
+    oFront = 0;
+    dTop= oRear = qRear = -1;
+
+    while(*t != END){
+        if(*t == DIGIT || *t == COEFFICIENT){
+            if(*t == COEFFICIENT){
+                digits[++dTop] = *t;
+                t++;
+            }
+            digits[++dTop] = *t;
+            t++;
+        }
+        else if(isTokOperator(*t)){
+            Token op = *t;
+            if(oFront <= oRear && precedence(op) > precedence(ops[oRear])){
+                temp_stack[++tempTop] = RIGHT_P;
+                while(oFront <= oRear && precedence(op) > precedence(ops[oRear])){
+                    if(digits[dTop] == VAR){
+                        temp_stack[++tempTop] = digits[dTop--];
+                    }
+                    temp_stack[++tempTop] = digits[dTop--];
+                    temp_stack[++tempTop] = ops[oFront++];
+                }
+                if(digits[dTop] == VAR){
+                    temp_stack[++tempTop] = digits[dTop--];
+                }
+                temp_stack[++tempTop] = digits[dTop--];
+                temp_stack[++tempTop]= LEFT_P;
+
+                //push temp_stack to output queue
+                while(tempTop > -1)
+                    queue[++qRear] = temp_stack[tempTop--];
+                tempTop = -1;
+            }
+            ops[++oRear] = op;
+    
+            t++;
+        }
+    }
+    //copy remaining
+    if(dTop == (oRear - oFront)){ //equals in quantity, therefore copy ops first
+        while(oFront <= oRear){
+            queue[++qRear] = ops[oFront++];
+            queue[++qRear] = digits[dTop--];
+        }
+        return;
+    }
+    while(dTop > 0){
+        queue[++qRear] = digits[dTop--];
+        queue[++qRear] = ops[oFront++];
+    }
+    queue[++qRear] = digits[dTop];
+    queue[++qRear] = END;
+}
+
 void freeTree(Node **r){
     if(*r == NULL)
         return;
