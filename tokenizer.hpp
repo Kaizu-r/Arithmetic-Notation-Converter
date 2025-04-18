@@ -17,7 +17,12 @@ typedef enum {
     VAR,
     COEFFICIENT,
     END
-}Token;
+}Token_t;
+
+typedef struct {
+    Token_t t;
+    float val;
+} Token;
 
 
 void removeSpace(std::string str){
@@ -62,7 +67,7 @@ int isOperator(char c){
     return 0;
 }
 
-Token toOperator(char c){
+Token_t toOperator(char c){
     switch(c){
         case '+':
             return ADD;
@@ -87,7 +92,7 @@ int isVar(char c){
         return 1;
     return 0;
 }
-void tokenize(Token *t, float* nums, float* coeff, char *var,  std::string str){
+void tokenize(Token_t *t, float* nums, float* coeff, char *var,  std::string str){
     int num_top = -1;
     int token_top = -1;
     int var_top = -1;
@@ -134,7 +139,7 @@ void tokenize(Token *t, float* nums, float* coeff, char *var,  std::string str){
     t[++token_top] = END;
 }
 
-void printTok(Token t){
+void printTok(Token_t t){
     switch(t){
         case DIGIT:
             std::cout << "DIGIT";

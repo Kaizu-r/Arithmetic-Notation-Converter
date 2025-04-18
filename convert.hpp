@@ -6,12 +6,12 @@
 #include "tokenizer.hpp"
 
 typedef struct node{
-    Token t;
+    Token_t t;
     struct node* left;
     struct node* right;
 }Node;
 
-int precedence(Token t){
+int precedence(Token_t t){
     switch(t){
         case ADD:
         case SUBTRACT:
@@ -25,7 +25,7 @@ int precedence(Token t){
     }
 }
 
-int isTokOperator(Token t){
+int isTokOperator(Token_t t){
     switch(t){
         case ADD:
         case SUBTRACT:
