@@ -92,11 +92,8 @@ int isVar(char c){
         return 1;
     return 0;
 }
-void tokenize(Token_t *t, float* nums, float* coeff, char *var,  std::string str){
-    int num_top = -1;
+void tokenize(Token *t, std::string str){
     int token_top = -1;
-    int var_top = -1;
-    int coeff_top = -1;
 
     int i = 0;
     while(i < str.length()){
@@ -105,38 +102,38 @@ void tokenize(Token_t *t, float* nums, float* coeff, char *var,  std::string str
             int end = i;
             while(i+1<str.length() && isDigit(str.at(i+1)))
                 end = ++i;
-            int num = toInt(str, begin, end); 
+            float num = toInt(str, begin, end); 
 
             //need to add float part here or maybe on different if
 
             if(i + 1 < str.length() && isVar(str.at(i+1))){
-                coeff[++coeff_top] = num;
-                var[++var_top] = str.at(++i);
-                t[++token_top] = COEFFICIENT;
-                t[++token_top] = VAR;
+                t[++token_top].t = COEFFICIENT;
+                t[token_top].val = num;
+                t[++token_top].t = VAR;
+                t[token_top].val = (int) str.at(++i);
             }
             else{
-                t[++token_top] = DIGIT;
-                nums[++num_top] = num; 
+                t[++token_top].t = DIGIT;
+                t[token_top].val = num;
             }
                 
 
         }
         else if(isVar(str.at(i))){
-            coeff[++coeff_top] = 1;
-            var[++var_top] = str.at(i);
-            t[++token_top] = COEFFICIENT;
-            t[++token_top] = VAR;
+            t[++token_top].t = COEFFICIENT;
+            t[token_top].val = 1;
+            t[++token_top].t = VAR;
+            t[token_top].val = (int) str.at(i);
         }
         else if(isOperator(str.at(i)))
-            t[++token_top] = toOperator(str.at(i));
+            t[++token_top].t = toOperator(str.at(i));
         else if(str.at(i) == '(')
-            t[++token_top] = LEFT_P;
+            t[++token_top].t = LEFT_P;
         else if(str.at(i) == ')')
-            t[++token_top] = RIGHT_P;
+            t[++token_top].t = RIGHT_P;
         i++;
     }
-    t[++token_top] = END;
+    t[++token_top].t = END;
 }
 
 void printTok(Token_t t){
