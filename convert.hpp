@@ -38,51 +38,55 @@ int isTokOperator(Token_t t){
     return 0;
 }
 
-void inToPost(Token *t, float *nums, float *coeff, Token* queue){
+void inToPost(Token *t, Token* queue){
 
     Token tokStack[100];
 
     int negative_flag = 1;
 
-    int rear, tok_top, nums_curr, coeff_curr;
-    nums_curr = -1;
-    coeff_curr = -1;
+    int rear, tok_top, 
+
     tok_top = -1;
     rear = -1;
 
-    while(*t != END){
-        if(*t == DIGIT || *t == COEFFICIENT){
-            if(*t == DIGIT){    //push first digit
-                nums[++nums_curr]*= negative_flag; 
-                queue[++rear] = DIGIT;
+    while(t->t != END){
+        if(t->t == DIGIT || t->t == COEFFICIENT){
+            if(t->t == DIGIT){    //push first digit
+                queue[++rear].t = DIGIT;
+                queue[rear].val = negative_flag * t->val; 
+                
                 t++;
             }
             else{
-                coeff[++coeff_curr] *= negative_flag;
-                queue[++rear] = COEFFICIENT;
-                queue[++rear] = VAR;
-                t+=2;
+                queue[++rear].t = COEFFICIENT;
+                queue[rear].val = negative_flag * t->val;
+
+                t++;
+                queue[++rear].t = VAR;
+                queue[rear].val = t->val;
+
+                t++;
             }
             negative_flag = 1;
         }
-        else if(isTokOperator(*t)){
-            if(*t == SUBTRACT && rear > -1 && *(t-1) != VAR && *(t-1) != DIGIT ){   //previous token is not a number, therefore subtract is negative sign
+        else if(isTokOperator(t->t)){
+            if(t->t == SUBTRACT && rear > -1 && (t-1)->t != VAR && (t-1)->t != DIGIT ){   //previous token is not a number, therefore subtract is negative sign
                 negative_flag = -1;
             }
             else{
-                while(tok_top > -1 && tokStack[tok_top] != LEFT_P && (precedence(tokStack[tok_top]) >= precedence(*t)) && *t != POW){
+                while(tok_top > -1 && tokStack[tok_top].t != LEFT_P && (precedence(tokStack[tok_top].t) >= precedence(t->t)) && t->t != POW){
                     queue[++rear] = tokStack[tok_top--];    //pop and push everythign to queue
                 }
                 tokStack[++tok_top] = *t;
                 t++;
             }
         }
-        else if(*t == LEFT_P){
-            tokStack[++tok_top] = LEFT_P;
+        else if(t->t == LEFT_P){
+            tokStack[++tok_top].t = LEFT_P;
             t++;
         }
-        else if(*t == RIGHT_P){
-            while(tok_top > -1 && tokStack[tok_top] != LEFT_P){
+        else if(t->t == RIGHT_P){
+            while(tok_top > -1 && tokStack[tok_top].t != LEFT_P){
                 queue[++rear] = tokStack[tok_top--]; //pop everything to queue
             }
             if(tok_top != -1)
@@ -92,10 +96,10 @@ void inToPost(Token *t, float *nums, float *coeff, Token* queue){
     }
     while(tok_top > -1)
         queue[++rear] = tokStack[tok_top--];    //pop the rest of it
-    queue[++rear] = END;
+    queue[++rear].t = END;
 }
 
-void postToIn(Token *t, float *nums, float *coeff, Token* queue){
+void postToIn(Token *t,  Token* queue){
     Token digits[100];
     Token ops[100];
     Token temp_stack[100];
@@ -105,31 +109,31 @@ void postToIn(Token *t, float *nums, float *coeff, Token* queue){
     oFront = 0;
     dTop= oRear = qRear = -1;
 
-    while(*t != END){
-        if(*t == DIGIT || *t == COEFFICIENT){
-            if(*t == COEFFICIENT){
+    while(t->t != END){
+        if(t->t == DIGIT || t->t == COEFFICIENT){
+            if(t->t == COEFFICIENT){
                 digits[++dTop] = *t;
                 t++;
             }
             digits[++dTop] = *t;
             t++;
         }
-        else if(isTokOperator(*t)){
+        else if(isTokOperator(t->t)){
             Token op = *t;
-            if(oFront <= oRear && precedence(op) > precedence(ops[oRear])){
-                temp_stack[++tempTop] = RIGHT_P;
-                while(oFront <= oRear && precedence(op) > precedence(ops[oRear])){
-                    if(digits[dTop] == VAR){
+            if(oFront <= oRear && precedence(op.t) > precedence(ops[oRear].t)){
+                temp_stack[++tempTop].t = RIGHT_P;
+                while(oFront <= oRear && precedence(op.t) > precedence(ops[oRear].t)){
+                    if(digits[dTop].t == VAR){
                         temp_stack[++tempTop] = digits[dTop--];
                     }
                     temp_stack[++tempTop] = digits[dTop--];
                     temp_stack[++tempTop] = ops[oFront++];
                 }
-                if(digits[dTop] == VAR){
+                if(digits[dTop].t == VAR){
                     temp_stack[++tempTop] = digits[dTop--];
                 }
                 temp_stack[++tempTop] = digits[dTop--];
-                temp_stack[++tempTop]= LEFT_P;
+                temp_stack[++tempTop].t = LEFT_P;
 
                 //push temp_stack to output queue
                 while(tempTop > -1)
@@ -154,7 +158,7 @@ void postToIn(Token *t, float *nums, float *coeff, Token* queue){
         queue[++qRear] = ops[oFront++];
     }
     queue[++qRear] = digits[dTop];
-    queue[++qRear] = END;
+    queue[++qRear].t = END;
 }
 
 void freeTree(Node **r){
@@ -164,13 +168,7 @@ void freeTree(Node **r){
     freeTree(&(*r)->right);
 }
 
-Node* createNode(Token t){
-    Node* n = (Node*) malloc(sizeof(Node));
-    n->t = t;
-    n->left = nullptr;
-    n->right = nullptr;
-    return n;
-}
+
 
 
 
