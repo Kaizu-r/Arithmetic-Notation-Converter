@@ -94,6 +94,21 @@ void inToPost(Token *t, Token* queue){
     queue[++rear].t = END;
 }
 
+void popExpr(Token *dest, int *dest_top, Token *from, int *from_top){
+    if(*from_top < 0)
+        return;
+    if(from[*from_top].t == RIGHT_P){
+        int flag = -1;
+        do{
+            dest[++(*dest_top)] = from[(*from_top)--];
+            if(from[*from_top].t == LEFT_P)
+                flag++;
+            else if(from[*from_top].t == RIGHT_P)
+                flag--;
+        }while(flag != 0);
+    }
+    dest[++(*dest_top)] = from[(*from_top)--];
+}
 
 
 void postToIn(Token *t,  Token* queue){
@@ -117,28 +132,8 @@ void postToIn(Token *t,  Token* queue){
             int left_top, right_top;
             left_top = right_top = -1;
             //get left and right operands
-            if(temp_stack[tempTop].t == RIGHT_P){
-                int flag = -1;
-                do{
-                    right[++right_top] = temp_stack[tempTop--];
-                    if(temp_stack[tempTop].t == LEFT_P)
-                        flag++;
-                    else if(temp_stack[tempTop].t == RIGHT_P)
-                        flag--;
-                }while(flag != 0);
-            }
-            right[++right_top] = temp_stack[tempTop--];
-            if(temp_stack[tempTop].t == RIGHT_P){
-                int flag = -1;
-                do{
-                    left[++left_top] = temp_stack[tempTop--];
-                    if(temp_stack[tempTop].t == LEFT_P)
-                        flag++;
-                    else if(temp_stack[tempTop].t == RIGHT_P)
-                        flag--;
-                }while(flag != 0);
-            }
-            left[++left_top] = temp_stack[tempTop--];
+            popExpr(right, &right_top, temp_stack, &tempTop);
+            popExpr(left, &left_top, temp_stack, &tempTop);
 
             //store expr in temp_stack
             temp_stack[++tempTop].t = LEFT_P;
