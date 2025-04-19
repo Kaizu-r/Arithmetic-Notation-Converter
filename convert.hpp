@@ -44,7 +44,7 @@ void inToPost(Token *t, Token* queue){
 
     int negative_flag = 1;
 
-    int rear, tok_top, 
+    int rear, tok_top; 
 
     tok_top = -1;
     rear = -1;
@@ -104,10 +104,10 @@ void postToIn(Token *t,  Token* queue){
     Token ops[100];
     Token temp_stack[100];
     int tempTop = -1;    
-    int dTop, oFront, oRear, qRear;
+    int dTop, oTop, qRear;
 
-    oFront = 0;
-    dTop= oRear = qRear = -1;
+
+    dTop= oTop = qRear = -1;
 
     while(t->t != END){
         if(t->t == DIGIT || t->t == COEFFICIENT){
@@ -120,44 +120,56 @@ void postToIn(Token *t,  Token* queue){
         }
         else if(isTokOperator(t->t)){
             Token op = *t;
-            if(oFront <= oRear && precedence(op.t) > precedence(ops[oRear].t)){
+            if(oTop > -1 && (precedence(op.t) > precedence(ops[oTop].t))){
                 temp_stack[++tempTop].t = RIGHT_P;
-                while(oFront <= oRear && precedence(op.t) > precedence(ops[oRear].t)){
+                //while(oTop >-1 && precedence(op.t) > precedence(ops[oTop].t)){
                     if(digits[dTop].t == VAR){
                         temp_stack[++tempTop] = digits[dTop--];
                     }
                     temp_stack[++tempTop] = digits[dTop--];
-                    temp_stack[++tempTop] = ops[oFront++];
-                }
+                    temp_stack[++tempTop] = ops[oTop--];
+                //}
                 if(digits[dTop].t == VAR){
                     temp_stack[++tempTop] = digits[dTop--];
                 }
                 temp_stack[++tempTop] = digits[dTop--];
                 temp_stack[++tempTop].t = LEFT_P;
+                temp_stack[++tempTop] = op;
 
-                //push temp_stack to output queue
-                while(tempTop > -1)
-                    queue[++qRear] = temp_stack[tempTop--];
-                tempTop = -1;
+
             }
-            ops[++oRear] = op;
+            else
+                ops[++oTop] = op;
     
             t++;
         }
     }
     //copy remaining
-    if(dTop == (oRear - oFront)){ //equals in quantity, therefore copy ops first
-        while(oFront <= oRear){
-            queue[++qRear] = ops[oFront++];
-            queue[++qRear] = digits[dTop--];
-        }
-        return;
-    }
     while(dTop > 0){
-        queue[++qRear] = digits[dTop--];
-        queue[++qRear] = ops[oFront++];
+        if(digits[dTop].t == VAR){
+            temp_stack[++tempTop] = digits[dTop--];
+        }
+        temp_stack[++tempTop] = digits[dTop--];
+        if(oTop > -1){
+            Token op = ops[oTop];
+            while(oTop > 0 && precedence(op.t) < precedence(ops[oTop-1].t)){
+                temp_stack[++tempTop] = ops[--oTop];
+                if(digits[dTop].t == VAR){
+                    temp_stack[++tempTop] = digits[dTop--];
+                }
+                temp_stack[++tempTop] = digits[dTop--];
+            }
+            temp_stack[++tempTop] = op;
+            oTop--;
+        }
     }
-    queue[++qRear] = digits[dTop];
+    if(dTop > -1)
+        temp_stack[++tempTop] = digits[dTop];
+    
+
+    //push temp_stack to queue
+    while(tempTop > -1)
+        queue[++qRear] = temp_stack[tempTop--];
     queue[++qRear].t = END;
 }
 
