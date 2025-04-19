@@ -178,6 +178,46 @@ void printTok(Token_t t){
     std::cout << ' ';
 }
 
-
+void printTokLiteral(Token t){
+    switch(t.t){
+        case DIGIT:
+            std::cout << (int) t.val;
+            break;
+        case ADD:
+            std::cout << '+';
+            break;
+        case SUBTRACT:
+            std::cout << '-';
+            break;
+        case DIVIDE:
+            std::cout << '/';
+            break;
+        case MULTIPLY:
+            std::cout << '*';
+            break;
+        case POW:
+            std::cout << '^';
+            break;
+        case MOD:
+            std::cout << '%';
+            break;
+        case LEFT_P:
+            std::cout << '(';
+            break;
+        case RIGHT_P:
+            std::cout << ')';
+            break;
+        case VAR:
+            std::cout << (char) (int) t.val;
+            break;
+        case COEFFICIENT:
+            std::cout << (int) t.val;
+            break;
+        case END:
+            std::cout << "END";
+            break;
+    }
+    std::cout << ' ';
+}
 
 #endif
