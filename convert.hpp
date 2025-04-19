@@ -5,11 +5,6 @@
 #include <stdlib.h>
 #include "tokenizer.hpp"
 
-typedef struct node{
-    Token_t t;
-    struct node* left;
-    struct node* right;
-}Node;
 
 int precedence(Token_t t){
     switch(t){
@@ -166,12 +161,7 @@ void postToIn(Token *t,  Token* queue){
 
 }
 
-void freeTree(Node **r){
-    if(*r == NULL)
-        return;
-    freeTree(&(*r)->left);
-    freeTree(&(*r)->right);
-}
+
 
 
 
