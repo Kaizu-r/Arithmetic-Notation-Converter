@@ -99,78 +99,71 @@ void inToPost(Token *t, Token* queue){
     queue[++rear].t = END;
 }
 
+
+
 void postToIn(Token *t,  Token* queue){
-    Token digits[100];
     Token ops[100];
     Token temp_stack[100];
-    int tempTop = -1;    
-    int dTop, oTop, qRear;
-
-
-    dTop= oTop = qRear = -1;
-
+    int tempTop = -1;
+    int rear = -1;
+    int oTop = -1;
+    
     while(t->t != END){
-        if(t->t == DIGIT || t->t == COEFFICIENT){
-            if(t->t == COEFFICIENT){
-                digits[++dTop] = *t;
-                t++;
-            }
-            digits[++dTop] = *t;
-            t++;
+        if(t->t == DIGIT)
+            temp_stack[++tempTop] = *t;
+        else if(t->t == COEFFICIENT){
+            temp_stack[++tempTop] = *(t++);
+            temp_stack[++tempTop] = *t;
         }
         else if(isTokOperator(t->t)){
             Token op = *t;
-            if(oTop > -1 && (precedence(op.t) > precedence(ops[oTop].t))){
-                temp_stack[++tempTop].t = RIGHT_P;
-                //while(oTop >-1 && precedence(op.t) > precedence(ops[oTop].t)){
-                    if(digits[dTop].t == VAR){
-                        temp_stack[++tempTop] = digits[dTop--];
-                    }
-                    temp_stack[++tempTop] = digits[dTop--];
-                    temp_stack[++tempTop] = ops[oTop--];
-                //}
-                if(digits[dTop].t == VAR){
-                    temp_stack[++tempTop] = digits[dTop--];
-                }
-                temp_stack[++tempTop] = digits[dTop--];
-                temp_stack[++tempTop].t = LEFT_P;
-                temp_stack[++tempTop] = op;
-
-
+            Token left[100];
+            Token right[100];
+            int left_top, right_top;
+            left_top = right_top = -1;
+            //get left and right operands
+            if(temp_stack[tempTop].t == RIGHT_P){
+                int flag = -1;
+                do{
+                    right[++right_top] = temp_stack[tempTop--];
+                    if(temp_stack[tempTop].t == LEFT_P)
+                        flag++;
+                    else if(temp_stack[tempTop].t == RIGHT_P)
+                        flag--;
+                }while(flag != 0);
             }
-            else
-                ops[++oTop] = op;
-    
-            t++;
-        }
-    }
-    //copy remaining
-    while(dTop > 0){
-        if(digits[dTop].t == VAR){
-            temp_stack[++tempTop] = digits[dTop--];
-        }
-        temp_stack[++tempTop] = digits[dTop--];
-        if(oTop > -1){
-            Token op = ops[oTop];
-            while(oTop > 0 && precedence(op.t) < precedence(ops[oTop-1].t)){
-                temp_stack[++tempTop] = ops[--oTop];
-                if(digits[dTop].t == VAR){
-                    temp_stack[++tempTop] = digits[dTop--];
-                }
-                temp_stack[++tempTop] = digits[dTop--];
+            right[++right_top] = temp_stack[tempTop--];
+            if(temp_stack[tempTop].t == RIGHT_P){
+                int flag = -1;
+                do{
+                    left[++left_top] = temp_stack[tempTop--];
+                    if(temp_stack[tempTop].t == LEFT_P)
+                        flag++;
+                    else if(temp_stack[tempTop].t == RIGHT_P)
+                        flag--;
+                }while(flag != 0);
             }
+            left[++left_top] = temp_stack[tempTop--];
+
+            //store expr in temp_stack
+            temp_stack[++tempTop].t = LEFT_P;
+            while(left_top > -1)
+                temp_stack[++tempTop] = left[left_top--];
             temp_stack[++tempTop] = op;
-            oTop--;
+            while(right_top > -1)
+                temp_stack[++tempTop] = right[right_top--];
+            temp_stack[++tempTop].t = RIGHT_P;
+            
         }
+        t++;
     }
-    if(dTop > -1)
-        temp_stack[++tempTop] = digits[dTop];
-    
 
-    //push temp_stack to queue
-    while(tempTop > -1)
-        queue[++qRear] = temp_stack[tempTop--];
-    queue[++qRear].t = END;
+
+    //copy the rest, skip first parenthesis
+    for(int i = 1; i < tempTop; i++)
+        queue[++rear] = temp_stack[i];
+    queue[++rear].t = END;
+
 }
 
 void freeTree(Node **r){
