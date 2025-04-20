@@ -156,7 +156,19 @@ void postToIn(Token *t,  Token* queue){
 
 }
 
+void reverseParenthesis(Token *t){
+    while(t->t != END){
+        if(t->t == LEFT_P)
+            t->t = RIGHT_P;
+        else if(t->t == RIGHT_P)
+            t->t = LEFT_P;
+        t++;
+    }
+}
 
+void inToPre(Token *t, Token *queue){
+    
+}
 
 
 
