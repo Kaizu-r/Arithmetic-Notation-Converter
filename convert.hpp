@@ -89,8 +89,13 @@ void inToPost(Token *t, Token* queue){
             t++;
         }
     }
-    while(tok_top > -1)
-        queue[++rear] = tokStack[tok_top--];    //pop the rest of it
+    while(tok_top > -1){
+        if(tokStack[tok_top].t != LEFT_P)
+            queue[++rear] = tokStack[tok_top--];    //pop the rest of it
+        else
+            tok_top--;
+    }
+        
     queue[++rear].t = END;
 }
 
@@ -167,7 +172,23 @@ void reverseParenthesis(Token *t){
 }
 
 void inToPre(Token *t, Token *queue){
-    
+    Token temp[100];
+    reverseParenthesis(t);
+    //convert to postfix
+    inToPost(t, temp);
+    //find top
+    Token *p = temp;
+    int top = -1;
+    while(p->t != END){
+        p++;
+        top++;
+    }
+
+    //transfer to queue
+    int rear= -1;
+    while(top > -1)
+        queue[++rear] = temp[top--];
+    queue[++rear].t = END;
 }
 
 
