@@ -112,6 +112,8 @@ void popExpr(Token *dest, int *dest_top, Token *from, int *from_top){
                 flag--;
         }while(flag != 0);
     }
+    if(from[*from_top].t == VAR)
+        dest[++(*dest_top)] = from[(*from_top)--];
     dest[++(*dest_top)] = from[(*from_top)--];
 }
 
