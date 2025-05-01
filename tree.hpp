@@ -62,6 +62,21 @@ void preToTree(Token *t, int *curr, Node** root){
 
 }
 
+void postToTree(Token *t, int *curr, Node **root){
+    if(t[*curr].t == END)
+        return;
+    if(t[*curr].t == DIGIT || t[*curr].t == VAR){
+        *root = createNode(t[*curr]);
+        (*curr)++;
+        return;
+    }
+    *root = createNode(t[*curr]);   //initialize root with temporary token
+    (*curr)++;
+    postToTree(t, curr, &((*root)->left));
+    postToTree(t, curr, &((*root)->right));
+    (*root)->tok = t[*curr];    //reassign with new token
 
+
+}
 
 #endif
