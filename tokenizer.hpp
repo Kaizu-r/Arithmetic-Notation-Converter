@@ -24,6 +24,18 @@ typedef struct tok{
     char var;
 } Token;
 
+int isTokOperator(Token_t t){
+    switch(t){
+        case ADD:
+        case SUBTRACT:
+        case DIVIDE:
+        case MULTIPLY:
+        case POW:
+        case MOD:
+            return 1;
+    }
+    return 0;
+}
 
 void removeSpace(std::string str){
     str.erase(std::remove(str.begin(), str.end(), ' '), str.end());
