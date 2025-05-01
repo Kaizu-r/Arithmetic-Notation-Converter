@@ -12,6 +12,16 @@ typedef struct node{
     struct node* right;
 }Node;
 
+Node* createNode(Token tok){
+    Node *n = (Node*) malloc(sizeof(Node));
+    n->tok = tok;
+    n->left = nullptr;
+    n->right = nullptr;
+
+    return n;
+}
+
+
 void preorder(Node *n){
     if(n == nullptr)
         return;
@@ -35,6 +45,23 @@ void postorder(Node* n){
     postorder(n->right);    //exhaust right
     printTokLiteral(n->tok);
 }
+
+//populate the tree based on operation
+void preToTree(Token *t, int *curr, Node** root){
+    if(t[*curr].t == END)
+        return;
+    if(t[*curr].t == DIGIT || t[*curr].t == VAR){
+        *root = createNode(t[*curr]);
+        (*curr)++;
+        return;
+    }
+    *root = createNode(t[*curr]);
+    (*curr)++;
+    preToTree(t, curr, &((*root)->left));
+    preToTree(t, curr, &((*root)->right));
+
+}
+
 
 
 #endif
