@@ -110,10 +110,9 @@ void tokenize(Token *t, std::string str){
             //need to add float part here or maybe on different if
 
             if(i + 1 < str.length() && isVar(str.at(i+1))){
-                t[++token_top].t = COEFFICIENT;
-                t[token_top].val = num;
                 t[++token_top].t = VAR;
-                t[token_top].val = (int) str.at(++i);
+                t[token_top].val = num;
+                t[token_top].var = str.at(++i);
             }
             else{
                 t[++token_top].t = DIGIT;
@@ -123,10 +122,9 @@ void tokenize(Token *t, std::string str){
 
         }
         else if(isVar(str.at(i))){
-            t[++token_top].t = COEFFICIENT;
-            t[token_top].val = 1;
             t[++token_top].t = VAR;
-            t[token_top].val = (int) str.at(i);
+            t[token_top].val = 1;
+            t[token_top].var = str.at(i);
         }
         else if(isOperator(str.at(i)))
             t[++token_top].t = toOperator(str.at(i));
@@ -211,7 +209,7 @@ void printTokLiteral(Token t){
             std::cout << ')';
             break;
         case VAR:
-            std::cout << (char) (int) t.val;
+            std::cout << (int) t.val << t.var;
             break;
         case COEFFICIENT:
             std::cout << (int) t.val;
