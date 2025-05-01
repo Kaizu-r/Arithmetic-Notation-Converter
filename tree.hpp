@@ -20,6 +20,13 @@ void preorder(Node *n){
     preorder(n->right);
 }
 
+void inorder(Node* n){
+    if(n== nullptr)
+        return;
+    inorder(n->left);   //exhaust left first
+    printTokLiteral(n->tok);
+    inorder(n->right);
+}
 
 
 
