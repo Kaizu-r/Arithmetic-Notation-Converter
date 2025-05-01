@@ -122,5 +122,22 @@ void inToTree(Token *t, int *curr, Node **root){
 
 
 }
+//calls the preToTree
+void startPreToTree(Token *t, int *curr, Node **root){
+    preToTree(t, curr, root);
+}
+
+//starts the inToTree
+void startIntToTree(Token *t, int *curr, Node **root){
+    inToTree(t, curr, root);
+}
+
+//starts the postToTree
+void startPostToTree(Token *t, int *curr, Node **root){
+    while(t[*curr].t != END)    //find end of it
+        (*curr)++;
+    (*curr)--;  //skip END
+    postToTree(t, curr, root);  
+}
 
 #endif
