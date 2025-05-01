@@ -21,6 +21,10 @@ Node createNode(Token tok){
     return n;
 }
 
+void insertNode(Token tok, Node **n){
+    *n = (Node*) malloc(sizeof(Node));
+    **n = createNode(tok);
+}
 void preorder(Node *n){
     if(n == nullptr)
         return;
