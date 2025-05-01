@@ -17,10 +17,7 @@ int main(){
     Node *root = NULL;
     i = 0;
     
-    root = createNode(t[i]);
-    preToTree(t, &i, &(root->left));
-    preToTree(t, &i, &(root->right));
-    root->tok = t[i];
+    startIntToTree(t, &i, &root);
 
     std::cout << std::endl;
     preorder(root);
