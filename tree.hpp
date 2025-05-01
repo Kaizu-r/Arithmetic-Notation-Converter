@@ -12,6 +12,11 @@ typedef struct node{
     struct node* right;
 }Node;
 
+void preorder(Node *n){
+    printTokLiteral(n->tok);    ///print parent first
+    preorder(n->left);
+    preorder(n->right);
+}
 
 
 
