@@ -12,19 +12,16 @@ typedef struct node{
     struct node* right;
 }Node;
 
-Node createNode(Token tok){
-    Node n;
-    n.tok = tok;
-    n.left = nullptr;
-    n.right = nullptr;
+Node* createNode(Token tok){
+    Node *n = (Node*) malloc(sizeof(Node));
+    n->tok = tok;
+    n->left = nullptr;
+    n->right = nullptr;
 
     return n;
 }
 
-void insertNode(Token tok, Node **n){
-    *n = (Node*) malloc(sizeof(Node));
-    **n = createNode(tok);
-}
+
 void preorder(Node *n){
     if(n == nullptr)
         return;
@@ -50,19 +47,21 @@ void postorder(Node* n){
 }
 
 //populate the tree based on operation
-void preToTree(Token **t, Node* root){
-    if((*t)->t == END)
+void preToTree(Token *t, int *curr, Node** root){
+    if(t[*curr].t == END)
         return;
-    if((*t)->t == DIGIT || (*t)->t == VAR){
-        insertNode(**t, &root);
-        (*t)++; //move to next token
+    if(t[*curr].t == DIGIT || t[*curr].t == VAR){
+        *root = createNode(t[*curr]);
+        (*curr)++;
         return;
     }
-    //not a digit, so must be operator
-    insertNode(**t, &root);
-    (*t)++; //move to next token
-    preToTree(t, root->left);
-    preToTree(t, root->right);
+    *root = createNode(t[*curr]);
+    (*curr)++;
+    preToTree(t, curr, &((*root)->left));
+    preToTree(t, curr, &((*root)->right));
+
 }
+
+
 
 #endif
