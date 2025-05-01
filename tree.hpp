@@ -12,6 +12,15 @@ typedef struct node{
     struct node* right;
 }Node;
 
+Node createNode(Token tok){
+    Node n;
+    n.tok = tok;
+    n.left = nullptr;
+    n.right = nullptr;
+
+    return n;
+}
+
 void preorder(Node *n){
     if(n == nullptr)
         return;
