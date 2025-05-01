@@ -49,5 +49,20 @@ void postorder(Node* n){
     printTokLiteral(n->tok);
 }
 
+//populate the tree based on operation
+void preToTree(Token **t, Node* root){
+    if((*t)->t == END)
+        return;
+    if((*t)->t == DIGIT || (*t)->t == VAR){
+        insertNode(**t, &root);
+        (*t)++; //move to next token
+        return;
+    }
+    //not a digit, so must be operator
+    insertNode(**t, &root);
+    (*t)++; //move to next token
+    preToTree(t, root->left);
+    preToTree(t, root->right);
+}
 
 #endif
