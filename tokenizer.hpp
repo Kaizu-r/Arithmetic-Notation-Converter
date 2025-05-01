@@ -37,6 +37,21 @@ int isTokOperator(Token_t t){
     return 0;
 }
 
+int precedence(Token_t t){
+    switch(t){
+        case ADD:
+        case SUBTRACT:
+            return 1;
+        case MULTIPLY:
+        case DIVIDE:
+            return 2;
+        case POW:
+            return 3;
+        default:
+            return 0;
+    }
+}
+
 void removeSpace(std::string str){
     str.erase(std::remove(str.begin(), str.end(), ' '), str.end());
 }
