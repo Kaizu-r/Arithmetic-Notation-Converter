@@ -1,77 +1,35 @@
 #include<iostream>
 #include "tokenizer.hpp"
-#include "convert.hpp"
+#include "tree.hpp"
 
 int main(){
     std::string str;
     std::cout << "ENTER: ";
     std::getline(std::cin, str);
 
-    removeSpace(str);
-    Token_t t[100];
-    float num[100];
-    float coeff[100];
-    char var[100];
-
-    tokenize(t, num, coeff, var, str);
-
+    //removeSpace(str);
+    Token *t;
+    
+    tokenize(t, str);
     int i = 0;
-    while(t[i] != END)
-        printTok(t[i++]);
+    while(t[i].t != END)
+        printTok(t[i++].t);
+    Node *root = NULL;
+    i = 0;
     
-    //reprint it
-    i = 0;
-    int j = 0, k = 0, l = 0;
-    while(t[i] != END){
-        if(t[i] == DIGIT){
-            std::cout << num[j++] << ' ';
-        }
-        else if(t[i] == COEFFICIENT)
-            std::cout << coeff[k++];
-        else if(t[i] == VAR)
-            std::cout << var[l++] << ' ';
-        else
-            printTok(t[i]);
-        i++;
-    }
+    root = createNode(t[i++]);
+    preToTree(t, &i, &(root->left));
+    preToTree(t, &i, &(root->right));
 
     std::cout << std::endl;
-    inToPost(t, num, coeff, t);
+    preorder(root);
+    std::cout << std::endl;
+    inorder(root);
+    std::cout << std::endl;
+    postorder(root);
 
-    i = 0;
-    j = 0, k = 0, l = 0;
-    while(t[i] != END){
-        if(t[i] == DIGIT){
-            std::cout << num[j++] << ' ';
-        }
-        else if(t[i] == COEFFICIENT)
-            std::cout << coeff[k++];
-        else if(t[i] == VAR)
-            std::cout << var[l++] << ' ';
-        else
-            printTok(t[i]);
-        i++;
-    }
+    //inorder(root);
+
+
     
-    std::cout << std::endl;
-
-    postToIn(t, num, coeff, t);
-
-    i = 0;
-    j = 0, k = 0, l = 0;
-    while(t[i] != END){
-        if(t[i] == DIGIT){
-            std::cout << num[j++] << ' ';
-        }
-        else if(t[i] == COEFFICIENT)
-            std::cout << coeff[k++];
-        else if(t[i] == VAR)
-            std::cout << var[l++] << ' ';
-        else
-            printTok(t[i]);
-        i++;
-    }
-
-    std::cout << std::endl;
-    return 0;
 }
