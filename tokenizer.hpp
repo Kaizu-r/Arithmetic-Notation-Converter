@@ -22,8 +22,6 @@ typedef struct tok{
     Token_t t;
     float val;
     char var;
-    struct tok* left;
-    struct tok* right;
 } Token;
 
 
