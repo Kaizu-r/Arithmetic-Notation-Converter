@@ -15,7 +15,6 @@ typedef enum {
     LEFT_P,
     RIGHT_P,
     VAR,
-    COEFFICIENT,
     END
 }Token_t;
 
@@ -169,9 +168,6 @@ void printTok(Token_t t){
         case VAR:
             std::cout << "VAR";
             break;
-        case COEFFICIENT:
-            std::cout << "COEFFICIENT";
-            break;
         case END:
             std::cout << "END";
             break;
@@ -210,9 +206,6 @@ void printTokLiteral(Token t){
             break;
         case VAR:
             std::cout << (int) t.val << t.var;
-            break;
-        case COEFFICIENT:
-            std::cout << (int) t.val;
             break;
         case END:
             std::cout << "END";
