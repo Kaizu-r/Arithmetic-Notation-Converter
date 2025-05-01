@@ -28,7 +28,13 @@ void inorder(Node* n){
     inorder(n->right);
 }
 
-
+void postorder(Node* n){
+    if(n == nullptr)
+        return;
+    postorder(n->left); //exhaust left first
+    postorder(n->right);    //exhaust right
+    printTokLiteral(n->tok);
+}
 
 
 #endif
