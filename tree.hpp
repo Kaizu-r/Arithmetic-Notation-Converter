@@ -13,6 +13,8 @@ typedef struct node{
 }Node;
 
 void preorder(Node *n){
+    if(n == nullptr)
+        return;
     printTokLiteral(n->tok);    ///print parent first
     preorder(n->left);
     preorder(n->right);
