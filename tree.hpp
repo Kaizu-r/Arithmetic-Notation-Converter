@@ -78,19 +78,26 @@ void preToTree(Token *t, int *curr, Node** root){
 }
 
 void postToTree(Token *t, int *curr, Node **root){
-    if(*curr == -1)
-        return;
-    if(t[*curr].t == DIGIT || t[*curr].t == VAR){
-        *root = createNode(t[*curr]);
-        (*curr)--;
-        return;
+    Node* stack[100];
+    int top = -1;
+
+    while(t[*curr].t != END){
+        if(t[*curr].t == DIGIT || t[*curr].t == VAR)
+            stack[++top] = createNode(t[*curr]);
+        else{   //operator
+            Node *n = createNode(t[*curr]);
+            if(top > -1)
+                n->right = stack[top--];
+            if(top > -1)
+                n->left = stack[top--];
+            
+            stack[++top] = n;
+
+        }
+        (*curr)++;
     }
-    *root = createNode(t[*curr]);   //initialize root with temporary token
-    (*curr)--;
-    postToTree(t, curr, &((*root)->right));
-    postToTree(t, curr, &((*root)->left));
-
-
+    if(top == 0)
+        *root = stack[top];
 }
 
 //similar to shunting yard
@@ -128,9 +135,8 @@ void inToTree(Token *t, int *curr, Node **root){
             op_top--;
     }
     temp[++temp_top].t = END;
-    temp_top--;
 
-    postToTree(temp, &temp_top, root);
+    postToTree(temp, 0, root);
 
 
     
@@ -149,9 +155,6 @@ void startIntToTree(Token *t, int *curr, Node **root){
 
 //starts the postToTree
 void startPostToTree(Token *t, int *curr, Node **root){
-    while(t[*curr].t != END)    //find end of it
-        (*curr)++;
-    (*curr)--;  //skip END
     postToTree(t, curr, root);  
 }
 
