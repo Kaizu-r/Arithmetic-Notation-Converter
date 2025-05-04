@@ -17,7 +17,7 @@ int main(){
     Node *root = NULL;
     i = 0;
     
-    startIntToTree(t, &i, &root);
+    startPostToTree(t, &i, &root);
 
     std::cout << std::endl;
     preorder(root);
