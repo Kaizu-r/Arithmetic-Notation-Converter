@@ -3,6 +3,9 @@
 #include <string>
 #include <vector>
 
+#include "tokenizer.hpp"
+#include "tree.hpp"
+
 using namespace std;
 
 bool isValidCombo(const string& arg1, const string& arg2) {
