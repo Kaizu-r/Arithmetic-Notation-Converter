@@ -125,14 +125,18 @@ int main(int argc, char* argv[]) {
     }
 
     //METHOD FOR ARGS 1-4
-    executeMethod(arg1, arg2);
+    Node* root = NULL;
+    Token tok[inputStr.length()];
+    tokenize(tok, inputStr);
+
+    executeMethod(arg1, arg2, &root, tok);
 
     //WHERE TO PUT THE EVALUTE OPERATION WHEN THERE'S AN ARG 5
     if (emphasize) {
         cout << "Evaluating expression:\n";
     }
 
-    cout << inputStr << endl;
+    //cout << inputStr << endl;
 
     return 0;
 }
