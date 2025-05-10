@@ -136,7 +136,8 @@ void inToTree(Token *t, int *curr, Node **root){
     }
     temp[++temp_top].t = END;
 
-    postToTree(temp, 0, root);
+    int start = 0;
+    postToTree(temp, &start, root);
 
 
     
