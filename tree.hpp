@@ -149,7 +149,7 @@ void startPreToTree(Token *t, int *curr, Node **root){
 }
 
 //starts the inToTree
-void startIntToTree(Token *t, int *curr, Node **root){
+void startInToTree(Token *t, int *curr, Node **root){
     inToTree(t, curr, root);
 }
 
