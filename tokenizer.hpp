@@ -123,7 +123,7 @@ void tokenize(Token *t, std::string str){
     int token_top = -1;
 
     int i = 0;
-    while(i < str.length()){
+    while(i < str.length() && str.at(i) != '\n'){
         if(isDigit(str.at(i))){
             int begin = i;
             int end = i;
