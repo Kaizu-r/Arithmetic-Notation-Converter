@@ -65,7 +65,7 @@ void postorder(Node* n){
 void preToTree(Token *t, int *curr, Node** root){
     if(t[*curr].t == END)
         return;
-    if(t[*curr].t == DIGIT || t[*curr].t == VAR){
+    if(t[*curr].t == DIGIT){
         *root = createNode(t[*curr]);
         (*curr)++;
         return;
@@ -82,7 +82,7 @@ void postToTree(Token *t, int *curr, Node **root){
     int top = -1;
 
     while(t[*curr].t != END){
-        if(t[*curr].t == DIGIT || t[*curr].t == VAR)
+        if(t[*curr].t == DIGIT)
             stack[++top] = createNode(t[*curr]);
         else{   //operator
             Node *n = createNode(t[*curr]);
@@ -109,7 +109,7 @@ void inToTree(Token *t, int *curr, Node **root){
     *root = createNode(t[*curr]);   //temporary contents
 
     while(t[*curr].t != END){
-        if(t[*curr].t == DIGIT || t[*curr].t == VAR)
+        if(t[*curr].t == DIGIT)
             temp[++temp_top] = t[*curr]; //put to stack
         else if(isTokOperator(t[*curr].t)){
             while(op_top > -1 && op[op_top].t != LEFT_P && precedence(op[op_top].t) >= precedence(t[*curr].t)){
@@ -147,6 +147,7 @@ void inToTree(Token *t, int *curr, Node **root){
 //calls the preToTree
 void startPreToTree(Token *t, int *curr, Node **root){
     preToTree(t, curr, root);
+    
 }
 
 //starts the inToTree
