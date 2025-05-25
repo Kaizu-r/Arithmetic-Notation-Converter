@@ -14,14 +14,12 @@ typedef enum {
     MOD,
     LEFT_P,
     RIGHT_P,
-    VAR,
     END
 }Token_t;
 
 typedef struct tok{
     Token_t t;
     float val;
-    char var;
 } Token;
 
 int isTokOperator(Token_t t){
@@ -123,32 +121,17 @@ void tokenize(Token *t, std::string str){
     int token_top = -1;
 
     int i = 0;
-    while(i < str.length()){
+    while(i < str.length() && str.at(i) != '\n'){
         if(isDigit(str.at(i))){
             int begin = i;
             int end = i;
             while(i+1<str.length() && isDigit(str.at(i+1)))
                 end = ++i;
             float num = toInt(str, begin, end); 
-
-            //need to add float part here or maybe on different if
-
-            if(i + 1 < str.length() && isVar(str.at(i+1))){
-                t[++token_top].t = VAR;
-                t[token_top].val = num;
-                t[token_top].var = str.at(++i);
-            }
-            else{
-                t[++token_top].t = DIGIT;
-                t[token_top].val = num;
-            }
+            t[++token_top].t = DIGIT;
+            t[token_top].val = num;
                 
 
-        }
-        else if(isVar(str.at(i))){
-            t[++token_top].t = VAR;
-            t[token_top].val = 1;
-            t[token_top].var = str.at(i);
         }
         else if(isOperator(str.at(i)))
             t[++token_top].t = toOperator(str.at(i));
@@ -190,9 +173,6 @@ void printTok(Token_t t){
         case RIGHT_P:
             std::cout << "RIGHT_P";
             break;
-        case VAR:
-            std::cout << "VAR";
-            break;
         case END:
             std::cout << "END";
             break;
@@ -228,9 +208,6 @@ void printTokLiteral(Token t){
             break;
         case RIGHT_P:
             std::cout << ')';
-            break;
-        case VAR:
-            std::cout << (int) t.val << t.var;
             break;
         case END:
             std::cout << "END";

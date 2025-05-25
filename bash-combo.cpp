@@ -3,6 +3,9 @@
 #include <string>
 #include <vector>
 
+#include "tokenizer.hpp"
+#include "tree.hpp"
+
 using namespace std;
 
 bool isValidCombo(const string& arg1, const string& arg2) {
@@ -21,29 +24,43 @@ bool isValidCombo(const string& arg1, const string& arg2) {
     return false;
 }
 
-void executeMethod(const string& arg1, const string& arg2) {
+void executeMethod(const string& arg1, const string& arg2, Node **root, Token *tok) {
+    int start = 0;
     if (arg1 == "-in" && arg2 == "-pre" ) {
         cout << "[INFO] Using Infix and Prefix strategy\n";
+        startInToTree(tok, &start, root);
+        preorder(*root);
     } 
 
     else if (arg1 == "-pre" && arg2 == "-in") {
         cout << "[INFO] Using Prefix and Infix strategy\n";
+        startPreToTree(tok, &start, root);
+        inorder(*root);
+        
     }
     
     else if (arg1 == "-pos" && arg2 == "-pre") {
         cout << "[INFO] Using Postfix and Prefix strategy\n";
+        startPostToTree(tok, &start, root);
+        preorder(*root);
     } 
     
     else if (arg1 == "-pre" && arg2 == "-pos") {
         cout << "[INFO] Using Prefix and Postfix strategy\n";
+        startPreToTree(tok, &start, root);
+        postorder(*root);
     } 
     
     else if (arg1 == "-in" && arg2 == "-pos")  {
         cout << "[INFO] Using Infix and Postfix strategy\n";
+        startInToTree(tok, &start, root);
+        postorder(*root);
     } 
 
     else if (arg1 == "-pos" && arg2 == "-in") {
         cout << "[INFO] Using Postfix and Infix strategy\n";
+        startPostToTree(tok, &start, root);
+        inorder(*root);
     } 
     
     else {
@@ -108,14 +125,18 @@ int main(int argc, char* argv[]) {
     }
 
     //METHOD FOR ARGS 1-4
-    executeMethod(arg1, arg2);
+    Node* root = NULL;
+    Token tok[inputStr.length()];
+    tokenize(tok, inputStr);
+
+    executeMethod(arg1, arg2, &root, tok);
 
     //WHERE TO PUT THE EVALUTE OPERATION WHEN THERE'S AN ARG 5
     if (emphasize) {
         cout << "Evaluating expression:\n";
     }
 
-    cout << inputStr << endl;
+    //cout << inputStr << endl;
 
     return 0;
 }
