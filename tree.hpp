@@ -160,4 +160,14 @@ void startPostToTree(Token *t, int *curr, Node **root){
     postToTree(t, curr, root);  
 }
 
+void retrievePostTree(Node* r, Token* stack, int *top){
+    if(r == nullptr)
+        return;
+    retrievePostTree(r->left, stack, top);
+    retrievePostTree(r->right, stack, top);
+    stack[++(*top)] = r->tok;
+}
+
+
+
 #endif
