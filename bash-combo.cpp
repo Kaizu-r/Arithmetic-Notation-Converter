@@ -5,6 +5,7 @@
 
 #include "tokenizer.hpp"
 #include "tree.hpp"
+#include "parser.hpp"
 
 using namespace std;
 
@@ -128,6 +129,12 @@ int main(int argc, char* argv[]) {
     Node* root = NULL;
     Token tok[inputStr.length()];
     tokenize(tok, inputStr);
+
+    int i = 0;
+    if(!arith(tok, &i)){
+        cout<< "Invalid syntax" << endl;
+        return 0;
+    }
 
     executeMethod(arg1, arg2, &root, tok);
 
