@@ -133,7 +133,9 @@ int main(int argc, char* argv[]) {
 
     //WHERE TO PUT THE EVALUTE OPERATION WHEN THERE'S AN ARG 5
     if (emphasize) {
-        cout << "Evaluating expression:\n";
+        cout <<endl<< "Evaluating expression:\n";
+        float res = evaluate(root);
+        cout << "Result: " << res <<endl;
     }
 
     //cout << inputStr << endl;
