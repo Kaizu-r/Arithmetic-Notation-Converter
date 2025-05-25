@@ -160,7 +160,7 @@ void startPostToTree(Token *t, int *curr, Node **root){
     postToTree(t, curr, root);  
 }
 
-void retrievePostTree(Node* r, Token* stack, int *top){
+void retrievePostTree(Node* r, Token stack[], int *top){
     if(r == nullptr)
         return;
     retrievePostTree(r->left, stack, top);
@@ -169,35 +169,35 @@ void retrievePostTree(Node* r, Token* stack, int *top){
 }
 
 float evaluate(Node* r){
-    Token* stack;
+    Token stack[100];
     int top = -1;
     retrievePostTree(r, stack, &top);
     stack[++top].t = END;
 
     //actual evaluation
-    Token* nums;
+    Token nums[100];
     int numTop = -1;
     int i = 0;
-
+    
     while(stack[i].t != END){
         if(stack[i].t == DIGIT)
             nums[++numTop] = stack[i];
         else{
             switch(stack[i].t){
                 case ADD:
-                    stack[numTop - 1].val = stack[numTop - 1].val + stack[numTop].val;
+                    nums[numTop - 1].val = nums[numTop - 1].val + nums[numTop].val;
                     numTop--;
                     break;
                 case SUBTRACT:
-                    stack[numTop - 1].val = stack[numTop - 1].val - stack[numTop].val;
+                    nums[numTop - 1].val = nums[numTop - 1].val - nums[numTop].val;
                     numTop--;
                     break;
                 case MULTIPLY:
-                    stack[numTop - 1].val = stack[numTop - 1].val * stack[numTop].val;
+                    nums[numTop - 1].val = nums[numTop - 1].val * nums[numTop].val;
                     numTop--;
                     break;
                 case DIVIDE:    //needs error handling
-                    stack[numTop - 1].val = stack[numTop - 1].val / stack[numTop].val;
+                    nums[numTop - 1].val = nums[numTop - 1].val / nums[numTop].val;
                     numTop--;
                     break;
             }
@@ -208,8 +208,8 @@ float evaluate(Node* r){
         //error handling here
         return 0;
     }
-    return stack[numTop].val;
-
+    return nums[numTop].val;
+    
 
 }
 
