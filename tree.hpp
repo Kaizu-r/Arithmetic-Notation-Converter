@@ -168,6 +168,49 @@ void retrievePostTree(Node* r, Token* stack, int *top){
     stack[++(*top)] = r->tok;
 }
 
+float evaluate(Node* r){
+    Token* stack;
+    int top = -1;
+    retrievePostTree(r, stack, &top);
+    stack[++top].t = END;
 
+    //actual evaluation
+    Token* nums;
+    int numTop = -1;
+    int i = 0;
+
+    while(stack[i].t != END){
+        if(stack[i].t == DIGIT)
+            nums[++numTop] = stack[i];
+        else{
+            switch(stack[i].t){
+                case ADD:
+                    stack[numTop - 1].val = stack[numTop - 1].val + stack[numTop].val;
+                    numTop--;
+                    break;
+                case SUBTRACT:
+                    stack[numTop - 1].val = stack[numTop - 1].val - stack[numTop].val;
+                    numTop--;
+                    break;
+                case MULTIPLY:
+                    stack[numTop - 1].val = stack[numTop - 1].val * stack[numTop].val;
+                    numTop--;
+                    break;
+                case DIVIDE:    //needs error handling
+                    stack[numTop - 1].val = stack[numTop - 1].val / stack[numTop].val;
+                    numTop--;
+                    break;
+            }
+        }
+        i++;
+    }
+    if(numTop < 0){
+        //error handling here
+        return 0;
+    }
+    return stack[numTop].val;
+
+
+}
 
 #endif
