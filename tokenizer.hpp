@@ -20,7 +20,6 @@ typedef enum {
 typedef struct tok{
     Token_t t;
     float val;
-    char var;
 } Token;
 
 int isTokOperator(Token_t t){
