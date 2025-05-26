@@ -18,6 +18,10 @@ bool arith_pos(Token* q, int* curr);
 bool term(Token* q, int* curr);
 bool term_pos(Token* q, int* curr);
 bool factor(Token* q, int *curr);
+bool posexpr(Token* q, int *curr);
+bool posexpr_pos(Token* q, int *curr);
+
+bool isValid(Token* q, int* curr, std::string arg);
 
 bool arith(Token* q, int *curr){
     if(term(q, curr)){
@@ -92,6 +96,31 @@ bool factor(Token* q, int *curr){
     return false;
 }
 
+/*
+posexpr-> digit posexpr_pos
+posexpr_pos -> posexpr ops | e
+*/
+
+bool posexpr(Token*q, int *curr){
+    if(q[*curr].t == DIGIT){
+        (*curr)++;
+        if(posexpr_pos(q, curr))
+            return true;
+        return false;
+    }
+    return false;
+}
+
+bool posexpr_pos(Token *q, int *curr){
+    if(posexpr(q, curr)){
+        if(isTokOperator(q[*curr].t)){
+            (*curr)++;
+            return true;
+        }
+        return false;
+    }
+    return true;
+}
 
 
 
