@@ -18,6 +18,12 @@ bool arith_pos(Token* q, int* curr);
 bool term(Token* q, int* curr);
 bool term_pos(Token* q, int* curr);
 bool factor(Token* q, int *curr);
+bool posexpr(Token* q, int *curr);
+bool posexpr_pos(Token* q, int *curr);
+bool preexpr(Token* q, int *curr);
+bool preexpr_pos(Token* q, int*curr);
+
+bool isValid(Token* q, int* curr, std::string arg);
 
 bool arith(Token* q, int *curr){
     if(term(q, curr)){
@@ -92,7 +98,75 @@ bool factor(Token* q, int *curr){
     return false;
 }
 
+/*
+posexpr-> digit posexpr_pos
+posexpr_pos -> posexpr ops | e
+*/
 
+bool posexpr(Token*q, int *curr){
+    if(q[*curr].t == DIGIT){
+        (*curr)++;
+        if(posexpr_pos(q, curr))
+            return true;
+        return false;
+    }
+    return false;
+}
 
+bool posexpr_pos(Token *q, int *curr){
+    if(posexpr(q, curr)){
+        if(isTokOperator(q[*curr].t)){
+            (*curr)++;
+            return true;
+        }
+        return false;
+    }
+    return true;
+}
+
+/*
+pre ->     pre_pos digit
+pre_pos -> ops pre | e
+*/
+
+bool preexpr(Token* q, int *curr){
+    if(preexpr_pos(q, curr)){
+        if(q[*curr].t == DIGIT){
+            (*curr)++;
+            return true;
+        }
+        return false;
+    }
+    return true;
+}
+bool preexpr_pos(Token* q, int*curr){
+    if(isTokOperator(q[*curr].t)){
+        (*curr)++;
+        if(preexpr(q, curr))
+            return true;
+        return false;
+    }
+    return true;
+}
+
+bool isValid(Token* q, int* curr, std::string arg){
+    bool res;
+    if(arg == "-in"){
+        res = arith(q, curr);
+    }
+    else if(arg == "-pos"){
+        res = posexpr(q, curr);
+    }
+    else if(arg == "-pre"){
+        res = preexpr(q, curr);
+    }
+    else{
+        std::cout<< "Invalid arguments" <<std::endl;
+    }
+
+    if(q[*curr].t == END)
+        return res; //end of expr, return whatever the result of parsing is
+    return false;   //not end of expr
+}
 
 #endif

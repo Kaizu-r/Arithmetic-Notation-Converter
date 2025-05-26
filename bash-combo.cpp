@@ -131,7 +131,7 @@ int main(int argc, char* argv[]) {
     tokenize(tok, inputStr);
 
     int i = 0;
-    if(!arith(tok, &i)){
+    if(!isValid(tok, &i, arg1)){
         cout<< "Invalid syntax" << endl;
         return 0;
     }
