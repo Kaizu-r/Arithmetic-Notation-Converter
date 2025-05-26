@@ -20,6 +20,8 @@ bool term_pos(Token* q, int* curr);
 bool factor(Token* q, int *curr);
 bool posexpr(Token* q, int *curr);
 bool posexpr_pos(Token* q, int *curr);
+bool preexpr(Token* q, int *curr);
+bool preexpr_pos(Token* q, int*curr);
 
 bool isValid(Token* q, int* curr, std::string arg);
 
@@ -122,6 +124,31 @@ bool posexpr_pos(Token *q, int *curr){
     return true;
 }
 
+/*
+pre ->     pre_pos digit
+pre_pos -> ops pre | e
+*/
+
+bool preexpr(Token* q, int *curr){
+    if(preexpr_pos(q, curr)){
+        if(q[*curr].t == DIGIT){
+            (*curr)++;
+            return true;
+        }
+        return false;
+    }
+    return true;
+}
+bool preexpr_pos(Token* q, int*curr){
+    if(isTokOperator(q[*curr].t)){
+        (*curr)++;
+        if(preexpr(q, curr))
+            return true;
+        return false;
+    }
+    return true;
+}
+
 bool isValid(Token* q, int* curr, std::string arg){
     bool res;
     if(arg == "-in"){
@@ -131,7 +158,7 @@ bool isValid(Token* q, int* curr, std::string arg){
         res = posexpr(q, curr);
     }
     else if(arg == "-pre"){
-
+        res = preexpr(q, curr);
     }
     else{
         std::cout<< "Invalid arguments" <<std::endl;
