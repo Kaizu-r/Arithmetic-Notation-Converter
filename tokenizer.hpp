@@ -17,6 +17,12 @@ typedef enum {
     END
 }Token_t;
 
+typedef enum{
+    TOK_ERR,
+    SYNTAX_ERR,
+    EVAL_ERR,
+}Error;
+
 typedef struct tok{
     Token_t t;
     float val;
