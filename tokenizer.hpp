@@ -21,6 +21,7 @@ typedef enum{
     TOK_ERR,
     SYNTAX_ERR,
     EVAL_ERR,
+    NO_ERR
 }Error;
 
 typedef struct tok{
@@ -123,7 +124,7 @@ int isVar(char c){
         return 1;
     return 0;
 }
-void tokenize(Token *t, std::string str){
+void tokenize(Token *t, std::string str, Error* e){
     int token_top = -1;
 
     int i = 0;
@@ -145,6 +146,10 @@ void tokenize(Token *t, std::string str){
             t[++token_top].t = LEFT_P;
         else if(str.at(i) == ')')
             t[++token_top].t = RIGHT_P;
+        else{
+            *e = TOK_ERR;
+            return; 
+        }
         i++;
     }
     t[++token_top].t = END;
