@@ -122,6 +122,24 @@ bool posexpr_pos(Token *q, int *curr){
     return true;
 }
 
+bool isValid(Token* q, int* curr, std::string arg){
+    bool res;
+    if(arg == "-in"){
+        res = arith(q, curr);
+    }
+    else if(arg == "-pos"){
+        res = posexpr(q, curr);
+    }
+    else if(arg == "-pre"){
 
+    }
+    else{
+        std::cout<< "Invalid arguments" <<std::endl;
+    }
+
+    if(q[*curr].t == END)
+        return res; //end of expr, return whatever the result of parsing is
+    return false;   //not end of expr
+}
 
 #endif
