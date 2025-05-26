@@ -168,7 +168,7 @@ void retrievePostTree(Node* r, Token stack[], int *top){
     stack[++(*top)] = r->tok;
 }
 
-float evaluate(Node* r){
+float evaluate(Node* r, Error* e){
     Token stack[100];
     int top = -1;
     retrievePostTree(r, stack, &top);
@@ -197,6 +197,10 @@ float evaluate(Node* r){
                     numTop--;
                     break;
                 case DIVIDE:    //needs error handling
+                    if(nums[numTop].val == 0){
+                        *e = EVAL_ERR;
+                        return 0;
+                    }
                     nums[numTop - 1].val = nums[numTop - 1].val / nums[numTop].val;
                     numTop--;
                     break;

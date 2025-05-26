@@ -126,13 +126,18 @@ int main(int argc, char* argv[]) {
     }
 
     //METHOD FOR ARGS 1-4
+    Error e = NO_ERR;
     Node* root = NULL;
     Token tok[inputStr.length()];
-    tokenize(tok, inputStr);
+    tokenize(tok, inputStr, &e);
+    if(e != NO_ERR){
+        cout << "Error: Invalid symbols" <<endl;
+        return 0;
+    }
 
     int i = 0;
     if(!isValid(tok, &i, arg1)){
-        cout<< "Invalid syntax" << endl;
+        cout<< "Invalid syntax of input string" << endl;
         return 0;
     }
 
@@ -141,7 +146,11 @@ int main(int argc, char* argv[]) {
     //WHERE TO PUT THE EVALUTE OPERATION WHEN THERE'S AN ARG 5
     if (emphasize) {
         cout <<endl<< "Evaluating expression:\n";
-        float res = evaluate(root);
+        float res = evaluate(root, &e);
+        if(e != NO_ERR){
+            cout << "Invalid Operation (Dividing by zero)" <<endl;
+            return 0;
+        }
         cout << "Result: " << res <<endl;
     }
 
