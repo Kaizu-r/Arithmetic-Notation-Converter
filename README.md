@@ -12,7 +12,7 @@ To run the program:
 * Use the following command:
     * ./program {arg1} {arg2} {string} [-e]
 
-ARGUMENTS GUIDE
+## ARGUMENTS GUIDE
 * {arg1} and {arg2} (NOTE: order of arguments MATTER):
     * -in   -pre     -> Infix to Prefix
     * -pre  -in      -> Prefix to Infix
