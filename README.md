@@ -10,10 +10,10 @@ To run the program:
 * Move to the file directory containing the program, for example:
     * cd /Arithmetic-Notation-Converter
 * Use the following command:
-    * ./program <arg1> <arg2> <string> [-e]
+    * ./program {arg1} {arg2} {string} [-e]
 
 Arguments Guide
-* <arg1> and <arg2> (NOTE: order of arguments MATTER):
+* {arg1} and {arg2} (NOTE: order of arguments MATTER):
     * -in   -pre     -> Infix to Prefix
     * -pre  -in      -> Prefix to Infix
     * -pos  -pre     -> Postfix to Prefix
@@ -21,6 +21,6 @@ Arguments Guide
     * -in   -pos     -> Infix to Postfix
     * -pos  -in      -> Postfix to Infix
 
-* <string>           : The expression to be OPERATED
+* {string}           : The expression to be OPERATED
 
 * [-e]               : [Optional Argument] Emphasize output, (converts ouput to UPPERCASE)
