@@ -115,7 +115,7 @@ int main(int argc, char* argv[]) {
         cerr << "[Error]: Missing --from argument. Use ./converter --help for usage info" <<endl;
         return 1;
     }
-    if(string(argv[1]) != "--to"){
+    if(string(argv[3]) != "--to"){
         cerr << "[Error]: Missing --to argument. Use ./converter --help for usage info" <<endl;
         return 1;
     }
