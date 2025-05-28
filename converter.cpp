@@ -96,16 +96,28 @@ void printHelp() {
 
 int main(int argc, char* argv[]) {
     //help
-    if(argc == 1 || (argc == 2 && string(argv[1]) == "--help" || string(argv[1]) == "-h")) {
+    if(argc == 1) {
         printHelp();
         return 0;
     }
 
-    //too many or too few arguments
-    if (argc < 6){
-        cerr << "[Error]: Too few arguments. Use ./converter --help for usage info" <<endl;
-        return 1;
+    if(argc == 2){
+        if(string(argv[1]) == "--help" || string(argv[1]) == "-h"){
+            printHelp();
+            return 0;
+        }
+        else if(string(argv[1]) == "--guide"){
+            //put guide here
+            return 0;
+        }
+        else{
+            cerr <<"[Error]: Expected a --help, -h, or --guide but found " << argv[1] << "instead." <<endl;
+            return 0;
+        }
+
     }
+
+    //too many arguments
     if(argc > 7){
         cerr << "[Error]: Too many arguments. Use ./converter --help for usage info" << endl;
     }
