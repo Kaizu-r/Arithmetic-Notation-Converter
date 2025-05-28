@@ -74,7 +74,7 @@ void printHelp() {
     cout << "|              C++ Expression Parser Helper           |\n";
     cout << "\\=====================================================/\n\n";
     cout << "USAGE:\n";
-    cout << "  ./converter --from <arg1> --to <arg2> <string> [-e]\n\n";
+    cout << "  converter --from <arg1> --to <arg2> <string> [-e]\n\n";
     cout << "DESCRIPTION:\n";
     cout << "  A C++ terminal tool that accepts two argument flags to\n";
     cout << "  determine a printing method for the input string.\n\n";
@@ -90,7 +90,7 @@ void printHelp() {
     cout << "OPTIONAL ARGUMENT:\n";
     cout << "  -e                     : Emphasize output (convert to uppercase).\n\n";
     cout << "HELP:\n";
-    cout << "  ./converter {--help | -h}        : Show this help message\n\n";
+    cout << "  converter {--help | -h}        : Show this help message\n\n";
     cout << "=======================================================\n";
 }
 
@@ -111,24 +111,28 @@ int main(int argc, char* argv[]) {
             return 0;
         }
         else{
-            cerr <<"[Error]: Expected a --help, -h, or --guide but found " << argv[1] << "instead." <<endl;
-            return 0;
+            cerr <<"[Error]: Expected a --help, -h, or --guide but found " << argv[1] << " instead." <<endl;
+            return 1;
         }
 
     }
-
+    if(argc < 6){
+        cerr << "[Error]: Too few arguments. Use converter --help for usage info" <<endl;
+        return 1;
+    }
     //too many arguments
     if(argc > 7){
-        cerr << "[Error]: Too many arguments. Use ./converter --help for usage info" << endl;
+        cerr << "[Error]: Too many arguments. Use converter --help for usage info" << endl;
+        return 1;
     }
 
     //checks presence of "--from" and "--to"
     if(string(argv[1]) != "--from"){
-        cerr << "[Error]: Missing --from argument. Use ./converter --help for usage info" <<endl;
+        cerr << "[Error]: Missing --from argument. Use converter --help for usage info" <<endl;
         return 1;
     }
     if(string(argv[3]) != "--to"){
-        cerr << "[Error]: Missing --to argument. Use ./converter --help for usage info" <<endl;
+        cerr << "[Error]: Missing --to argument. Use converter --help for usage info" <<endl;
         return 1;
     }
     //store arguments
@@ -144,7 +148,7 @@ int main(int argc, char* argv[]) {
         if (flag == "-e") {
             emphasize = true;
         } else {
-            cerr << "[Error]: Unknown flag: " << flag << "Use ./converter --help to check for valid flags" <<endl;
+            cerr << "[Error]: Unknown flag: " << flag << "Use converter --help to check for valid flags" <<endl;
             return 1;
         }
     }
@@ -161,7 +165,7 @@ int main(int argc, char* argv[]) {
     Token tok[inputStr.length()];
     tokenize(tok, inputStr, &e);
     if(e != NO_ERR){
-        cout << "[Error]: Invalid symbols. Use ./converter --guide for more information" <<endl;
+        cout << "[Error]: Invalid symbols. Use converter --guide for more information" <<endl;
         return 0;
     }
 
