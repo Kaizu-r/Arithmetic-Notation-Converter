@@ -10,7 +10,6 @@ typedef enum {
     SUBTRACT,
     DIVIDE,
     MULTIPLY,
-    POW,
     MOD,
     LEFT_P,
     RIGHT_P,
@@ -35,7 +34,6 @@ int isTokOperator(Token_t t){
         case SUBTRACT:
         case DIVIDE:
         case MULTIPLY:
-        case POW:
         case MOD:
             return 1;
     }
@@ -48,10 +46,9 @@ int precedence(Token_t t){
         case SUBTRACT:
             return 1;
         case MULTIPLY:
+        case MOD:
         case DIVIDE:
             return 2;
-        case POW:
-            return 3;
         default:
             return 0;
     }
@@ -109,8 +106,6 @@ Token_t toOperator(char c){
             return MULTIPLY;
         case '/':
             return DIVIDE;
-        case '^':
-            return POW;
         case '%':
             return MOD;
     }
@@ -146,6 +141,7 @@ void tokenize(Token *t, std::string str, Error* e){
             t[++token_top].t = LEFT_P;
         else if(str.at(i) == ')')
             t[++token_top].t = RIGHT_P;
+        else if(str.at(i) == ' ');  //do nothing/ignore spaces
         else{
             *e = TOK_ERR;
             return; 
@@ -171,9 +167,6 @@ void printTok(Token_t t){
             break;
         case MULTIPLY:
             std::cout << "MULTIPLY";
-            break;
-        case POW:
-            std::cout << "POW";
             break;
         case MOD:
             std::cout << "MOD";
@@ -207,9 +200,6 @@ void printTokLiteral(Token t){
             break;
         case MULTIPLY:
             std::cout << '*';
-            break;
-        case POW:
-            std::cout << '^';
             break;
         case MOD:
             std::cout << '%';

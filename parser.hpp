@@ -10,7 +10,7 @@ production rules
 arith -> term arith_pos
 arith_pos -> + term arith_pos | - term arith_pos | e
 term -> factor term_pos
-term_pos -> * factor term_pos | / factor term_pos | e
+term_pos -> * factor term_pos | / factor term_pos | % factor term_pos |e
 factor -> digit | (arith) | - digit
 */
 bool arith(Token* q, int *curr);
@@ -57,7 +57,7 @@ bool term(Token* q, int* curr){
 }
 
 bool term_pos(Token* q, int* curr){
-    if(q[*curr].t == MULTIPLY || q[*curr].t == DIVIDE){
+    if(q[*curr].t == MULTIPLY || q[*curr].t == DIVIDE || q[*curr].t == MOD){
         (*curr)++;
         if(factor(q, curr)){
             if(term_pos(q, curr))
@@ -151,17 +151,17 @@ bool preexpr_pos(Token* q, int*curr){
 
 bool isValid(Token* q, int* curr, std::string arg){
     bool res;
-    if(arg == "-in"){
+    if(arg == "infix"){
         res = arith(q, curr);
     }
-    else if(arg == "-pos"){
+    else if(arg == "postfix"){
         res = posexpr(q, curr);
     }
-    else if(arg == "-pre"){
+    else if(arg == "prefix"){
         res = preexpr(q, curr);
     }
     else{
-        std::cout<< "Invalid arguments" <<std::endl;
+        std::cout<< "Error: Invalid arguments" <<std::endl;
     }
 
     if(q[*curr].t == END)

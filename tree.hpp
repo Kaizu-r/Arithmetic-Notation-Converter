@@ -196,12 +196,20 @@ float evaluate(Node* r, Error* e){
                     nums[numTop - 1].val = nums[numTop - 1].val * nums[numTop].val;
                     numTop--;
                     break;
-                case DIVIDE:    //needs error handling
+                case DIVIDE:   
                     if(nums[numTop].val == 0){
                         *e = EVAL_ERR;
                         return 0;
                     }
                     nums[numTop - 1].val = nums[numTop - 1].val / nums[numTop].val;
+                    numTop--;
+                    break;
+                case MOD:
+                    if(nums[numTop].val == 0){
+                        *e = EVAL_ERR;
+                        return 0;
+                    }
+                    nums[numTop - 1].val = (int) nums[numTop - 1].val % (int) nums[numTop].val;
                     numTop--;
                     break;
             }

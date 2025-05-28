@@ -11,9 +11,9 @@ using namespace std;
 
 bool isValidCombo(const string& arg1, const string& arg2) {
     vector<pair<string, string>> validCombos = {
-        {"-in", "-pre"}, {"-pre", "-in"},
-        {"-pos", "-pre"}, {"-pre", "-pos"},
-        {"-in", "-pos"}, {"-pos", "-in"}
+        {"infix", "prefix"}, {"prefix", "infix"},
+        {"postfix", "prefix"}, {"prefix", "postfix"},
+        {"infix", "postfix"}, {"postfix", "infix"}
     };
 
     for (const auto& combo : validCombos) {
@@ -27,38 +27,38 @@ bool isValidCombo(const string& arg1, const string& arg2) {
 
 void executeMethod(const string& arg1, const string& arg2, Node **root, Token *tok) {
     int start = 0;
-    if (arg1 == "-in" && arg2 == "-pre" ) {
+    if (arg1 == "infix" && arg2 == "prefix" ) {
         cout << "[INFO] Using Infix and Prefix strategy\n";
         startInToTree(tok, &start, root);
         preorder(*root);
     } 
 
-    else if (arg1 == "-pre" && arg2 == "-in") {
+    else if (arg1 == "prefix" && arg2 == "infix") {
         cout << "[INFO] Using Prefix and Infix strategy\n";
         startPreToTree(tok, &start, root);
         inorder(*root);
         
     }
     
-    else if (arg1 == "-pos" && arg2 == "-pre") {
+    else if (arg1 == "postfix" && arg2 == "prefix") {
         cout << "[INFO] Using Postfix and Prefix strategy\n";
         startPostToTree(tok, &start, root);
         preorder(*root);
     } 
     
-    else if (arg1 == "-pre" && arg2 == "-pos") {
+    else if (arg1 == "prefix" && arg2 == "postfix") {
         cout << "[INFO] Using Prefix and Postfix strategy\n";
         startPreToTree(tok, &start, root);
         postorder(*root);
     } 
     
-    else if (arg1 == "-in" && arg2 == "-pos")  {
+    else if (arg1 == "infix" && arg2 == "postfix")  {
         cout << "[INFO] Using Infix and Postfix strategy\n";
         startInToTree(tok, &start, root);
         postorder(*root);
     } 
 
-    else if (arg1 == "-pos" && arg2 == "-in") {
+    else if (arg1 == "postfix" && arg2 == "infix") {
         cout << "[INFO] Using Postfix and Infix strategy\n";
         startPostToTree(tok, &start, root);
         inorder(*root);
@@ -70,58 +70,92 @@ void executeMethod(const string& arg1, const string& arg2, Node **root, Token *t
 }
 
 void printHelp() {
-    cout << "\n╔══════════════════════════════════════════════════════╗\n";
-    cout << "║              C++ Expression Parser Helper            ║\n";
-    cout << "╚══════════════════════════════════════════════════════╝\n\n";
+    cout << "\n/=====================================================\\\n";
+    cout << "|              C++ Expression Parser Helper           |\n";
+    cout << "\\=====================================================/\n\n";
     cout << "USAGE:\n";
-    cout << "  ./program <arg1> <arg2> <string> [-e]\n\n";
+    cout << "  converter --from <arg1> --to <arg2> <string> [-e]\n\n";
     cout << "DESCRIPTION:\n";
     cout << "  A C++ terminal tool that accepts two argument flags to\n";
     cout << "  determine a printing method for the input string.\n\n";
     cout << "REQUIRED ARGUMENTS:\n";
     cout << "  <arg1> and <arg2> combinations (order DOES matter):\n";
-    cout << "    -in   -pre     → Infix and Prefix strategy\n";
-    cout << "    -pre  -in      → Prefix and Infix strategy\n";
-    cout << "    -pos  -pre     → Postfix and Prefix strategy\n";
-    cout << "    -pre  -pos     → Prefix and Postfix strategy\n";
-    cout << "    -in   -pos     → Infix and Postfix strategy\n";
-    cout << "    -pos  -in      → Postfix and Infix strategy\n\n";
-    cout << "  <string>         : The exression to be OPERATED.\n\n";
+    cout << "    infix    prefix    : Infix and Prefix strategy\n";
+    cout << "    prefix   infix     : Prefix and Infix strategy\n";
+    cout << "    postfix  prefix    : Postfix and Prefix strategy\n";
+    cout << "    prefix   postfix   : Prefix and Postfix strategy\n";
+    cout << "    infix    postfix   : Infix and Postfix strategy\n";
+    cout << "    postfix  infix     : Postfix and Infix strategy\n\n";
+    cout << "  <string>               : The exression to be OPERATED.\n\n";
     cout << "OPTIONAL ARGUMENT:\n";
-    cout << "  -e               : Emphasize output (convert to uppercase).\n\n";
+    cout << "  -e                     : Emphasize output (convert to uppercase).\n\n";
     cout << "HELP:\n";
-    cout << "  ./program -help  : Show this help message\n\n";
-    cout << "════════════════════════════════════════════════════════\n";
+    cout << "  converter {--help | -h}        : Show this help message\n\n";
+    cout << "=======================================================\n";
 }
 
 int main(int argc, char* argv[]) {
-    if (argc == 2 && string(argv[1]) == "-help") {
+    //help
+    if(argc == 1) {
         printHelp();
         return 0;
     }
 
-    if (argc < 4 || argc > 5) {
-        cerr << "Invalid arguments. Use './program -help' for usage info.\n";
+    if(argc == 2){
+        if(string(argv[1]) == "--help" || string(argv[1]) == "-h"){
+            printHelp();
+            return 0;
+        }
+        else if(string(argv[1]) == "--guide"){
+            //put guide here
+            return 0;
+        }
+        else{
+            cerr <<"[Error]: Expected a --help, -h, or --guide but found " << argv[1] << " instead." <<endl;
+            return 1;
+        }
+
+    }
+    if(argc < 6){
+        cerr << "[Error]: Too few arguments. Use converter --help for usage info" <<endl;
+        return 1;
+    }
+    //too many arguments
+    if(argc > 7){
+        cerr << "[Error]: Too many arguments. Use converter --help for usage info" << endl;
         return 1;
     }
 
-    string arg1 = argv[1];
-    string arg2 = argv[2];
-    string inputStr = argv[3];
+    //checks presence of "--from" and "--to"
+    if(string(argv[1]) != "--from"){
+        cerr << "[Error]: Missing --from argument. Use converter --help for usage info" <<endl;
+        return 1;
+    }
+    if(string(argv[3]) != "--to"){
+        cerr << "[Error]: Missing --to argument. Use converter --help for usage info" <<endl;
+        return 1;
+    }
+    //store arguments
+    string arg1 = argv[2];
+    string arg2 = argv[4];
+    string inputStr = argv[5];
     bool emphasize = false;
+    
 
-    if (argc == 5) {
-        string flag = argv[4];
+    //check if evaluation is emphasized
+    if (argc == 7) {
+        string flag = argv[6];
         if (flag == "-e") {
             emphasize = true;
         } else {
-            cerr << "Unknown flag: " << flag << endl;
+            cerr << "[Error]: Unknown flag: " << flag << "Use converter --help to check for valid flags" <<endl;
             return 1;
         }
     }
 
+    //check if argument combinations are valid
     if (!isValidCombo(arg1, arg2)) {
-        cerr << "Invalid argument combination: " << arg1 << ", " << arg2 << endl;
+        cerr << "[Error]: Invalid argument combination: " << arg1 << ", " << arg2 << endl;
         return 1;
     }
 
@@ -131,13 +165,13 @@ int main(int argc, char* argv[]) {
     Token tok[inputStr.length()];
     tokenize(tok, inputStr, &e);
     if(e != NO_ERR){
-        cout << "Error: Invalid symbols" <<endl;
+        cout << "[Error]: Invalid symbols. Use converter --guide for more information" <<endl;
         return 0;
     }
 
     int i = 0;
     if(!isValid(tok, &i, arg1)){
-        cout<< "Invalid syntax of input string" << endl;
+        cout<< "[Error]: Invalid syntax of input string" << endl;
         return 0;
     }
 
@@ -148,7 +182,7 @@ int main(int argc, char* argv[]) {
         cout <<endl<< "Evaluating expression:\n";
         float res = evaluate(root, &e);
         if(e != NO_ERR){
-            cout << "Invalid Operation (Dividing by zero)" <<endl;
+            cout << "[Error]: Invalid Operation (Dividing by zero)" <<endl;
             return 0;
         }
         cout << "Result: " << res <<endl;
