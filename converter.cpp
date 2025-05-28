@@ -74,7 +74,7 @@ void printHelp() {
     cout << "|              C++ Expression Parser Helper           |\n";
     cout << "\\=====================================================/\n\n";
     cout << "USAGE:\n";
-    cout << "  ./program --from <arg1> --to <arg2> <string> [-e]\n\n";
+    cout << "  ./converter --from <arg1> --to <arg2> <string> [-e]\n\n";
     cout << "DESCRIPTION:\n";
     cout << "  A C++ terminal tool that accepts two argument flags to\n";
     cout << "  determine a printing method for the input string.\n\n";
@@ -90,7 +90,7 @@ void printHelp() {
     cout << "OPTIONAL ARGUMENT:\n";
     cout << "  -e                     : Emphasize output (convert to uppercase).\n\n";
     cout << "HELP:\n";
-    cout << "  ./program {--help | -h}        : Show this help message\n\n";
+    cout << "  ./converter {--help | -h}        : Show this help message\n\n";
     cout << "=======================================================\n";
 }
 
