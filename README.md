@@ -60,3 +60,9 @@ The program is written entirely in C++, with the following dependencies used:
 
 * Use of Structures (structs) to build the binary tree data structure
     * structs were used instead of classes to lessen the program's complexity
+* Tokenizer for turning input string to individual tokens. 
+    * optional spaces for infix notation
+* Parser/Syntax checker for each notation to check the validity of the input string
+    * uses recursive descent where each production is its own function
+* Evaluation of given string
+    * uses stacks to evaluate the expression and auto-detects any math errors (division by zero)
