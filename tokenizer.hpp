@@ -48,6 +48,7 @@ int precedence(Token_t t){
         case SUBTRACT:
             return 1;
         case MULTIPLY:
+        case MOD:
         case DIVIDE:
             return 2;
         case POW:
