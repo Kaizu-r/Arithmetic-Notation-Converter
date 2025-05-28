@@ -69,6 +69,43 @@ void executeMethod(const string& arg1, const string& arg2, Node **root, Token *t
     }
 }
 
+void printGuide(){
+    cout << "/===============================================================================================\\\n";
+    cout << "|                                  C++ Expression Parser Guide                                   |\n";
+    cout << "\\==============================================================================================/\n\n";
+
+    cout << "NOTATIONS\n";
+    cout << "\tPrefix: Operator before operand, separated by spaces\n";
+    cout << "\t\tEx: + 1 2\t-> 1 + 2\n";
+    cout << "\tInfix: Operator between operands. Spaces are optional\n";
+    cout << "\t\tEx: 1 + 2\n";
+    cout << "\tPostfix: Operands before operator, separated by spaces\n";
+    cout << "\t\tEx: 1 2 +\n\n";
+
+    cout << "CONVERSION\n";
+    cout << "\tExpected arguments must not be the same\n";
+    cout << "\t\tEx: --from infix --to infix -> Not valid\n";
+    cout << "\tInfix notations for inputs may include parenthesis\n";
+    cout << "\t\tEx: (1+2) * 4 is valid\n";
+    cout << "\tInfix notations for outputs will include parenthesis for every pair of operands and an operator\n";
+    cout << "\t\tEx: * + 1 2 4 in postfix will be converted to (1 + 2) * 4 in infix notation\n\n";
+
+    cout << "EVALUATION\n";
+    cout << "\tEvery digit is treated as a float, therefore integer division is not valid\n";
+    cout << "\tDivision by zero is detected during evaluation and will be flagged\n\n";
+
+    cout << "SAMPLE INPUTS\n";
+    cout << "\tFor help\n";
+    cout << "\t\tconverter --help\n";
+    cout << "\t\tconverter --h\n";
+    cout << "\t\tconverter\n";
+    cout << "\tFor guide\n";
+    cout << "\t\tconverter --guide\n";
+    cout << "\tSample infix to postfix with evaluation\n";
+    cout << "\t\tconverter --from infix --to postfix \"(1+2) * 5\" -e\n\n";
+    cout << "===============================================================================================\n\n";
+}
+
 void printHelp() {
     cout << "\n/=====================================================\\\n";
     cout << "|              C++ Expression Parser Helper           |\n";
@@ -86,11 +123,13 @@ void printHelp() {
     cout << "    prefix   postfix   : Prefix and Postfix strategy\n";
     cout << "    infix    postfix   : Infix and Postfix strategy\n";
     cout << "    postfix  infix     : Postfix and Infix strategy\n\n";
-    cout << "  <string>               : The exression to be OPERATED.\n\n";
+    cout << "  <string>             : The exression to be OPERATED.\n\n";
     cout << "OPTIONAL ARGUMENT:\n";
-    cout << "  -e                     : Emphasize output (convert to uppercase).\n\n";
+    cout << "  -e                             : Emphasize output (convert to uppercase).\n\n";
     cout << "HELP:\n";
     cout << "  converter {--help | -h}        : Show this help message\n\n";
+    cout << "GUIDE:\n";
+    cout << "  converter --guide               :Show guide\n";
     cout << "=======================================================\n";
 }
 
@@ -107,7 +146,7 @@ int main(int argc, char* argv[]) {
             return 0;
         }
         else if(string(argv[1]) == "--guide"){
-            //put guide here
+            printGuide();
             return 0;
         }
         else{
