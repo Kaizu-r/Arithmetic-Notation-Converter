@@ -209,7 +209,7 @@ float evaluate(Node* r, Error* e){
                         *e = EVAL_ERR;
                         return 0;
                     }
-                    nums[numTop - 1].val = nums[numTop - 1].val / nums[numTop].val;
+                    nums[numTop - 1].val = (int) nums[numTop - 1].val % (int) nums[numTop].val;
                     numTop--;
                     break;
             }
