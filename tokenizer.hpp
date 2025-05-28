@@ -146,6 +146,7 @@ void tokenize(Token *t, std::string str, Error* e){
             t[++token_top].t = LEFT_P;
         else if(str.at(i) == ')')
             t[++token_top].t = RIGHT_P;
+        else if(str.at(i) == ' ');  //do nothing/ignore spaces
         else{
             *e = TOK_ERR;
             return; 
