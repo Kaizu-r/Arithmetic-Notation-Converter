@@ -90,7 +90,7 @@ void printHelp() {
     cout << "OPTIONAL ARGUMENT:\n";
     cout << "  -e                     : Emphasize output (convert to uppercase).\n\n";
     cout << "HELP:\n";
-    cout << "  ./program -help        : Show this help message\n\n";
+    cout << "  ./program {--help | -h}        : Show this help message\n\n";
     cout << "=======================================================\n";
 }
 
