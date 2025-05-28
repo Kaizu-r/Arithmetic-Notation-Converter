@@ -71,8 +71,8 @@ void executeMethod(const string& arg1, const string& arg2, Node **root, Token *t
 
 void printGuide(){
     cout << "/===============================================================================================\\\n";
-    cout << "|                                  C++ Expression Parser Guide                                   |\n";
-    cout << "\\==============================================================================================/\n\n";
+    cout << "|                                  C++ Expression Parser Guide                                  |\n";
+    cout << "\\===============================================================================================/\n\n";
 
     cout << "NOTATIONS\n";
     cout << "\tPrefix: Operator before operand, separated by spaces\n";
