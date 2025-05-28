@@ -20,6 +20,10 @@ The C++ Arithmetic Notation Converter is a program whose purpose is to convert a
 * Download then extract the Repository
 * Install a C++ Compiler by running the following commands
     * sudo apt install mingw-w64 (for Ubuntu distros)
+* Set up PATH to recognized the program
+    * Open the Terminal
+    * Run this command
+        export PATH= /yourfilepath :$PATH
 
 # How to Run the Program
 
@@ -31,16 +35,16 @@ To run the program:
 * Compile converter.cpp by typing the following command
     * *g++ converter.cpp -o converter*
 * Run the program by typing the following command:
-    * *./converter {arg1} {arg2} {string} [-e]*
+    * *converter --from {arg1} --to {arg2} {string} [-e]*
 
 ## Arguments Guide
 * {arg1} and {arg2} (NOTE: order of arguments MATTER):
-    * -in   -pre     -> Infix to Prefix
-    * -pre  -in      -> Prefix to Infix
-    * -pos  -pre     -> Postfix to Prefix
-    * -pre  -pos     -> Prefix to Postfix
-    * -in   -pos     -> Infix to Postfix
-    * -pos  -in      -> Postfix to Infix
+    * infix    prefix     -> Infix to Prefix
+    * prefix   infix      -> Prefix to Infix
+    * postfix  prefix     -> Postfix to Prefix
+    * prefix   postfix    -> Prefix to Postfix
+    * infix    postfix    -> Infix to Postfix
+    * postfix  infix      -> Postfix to Infix
 
 * {string}           : The expression to be OPERATED
 
