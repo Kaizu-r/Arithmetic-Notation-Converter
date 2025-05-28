@@ -4,7 +4,7 @@ The C++ Arithmetic Notation Converter is a program whose purpose is to convert a
 
 # Installation Guide
 
-## For Windows
+**For Windows**
 * Download then extract the Repository
 * Install a C++ Compiler
     * Watch this [video](https://www.youtube.com/watch?v=oC69vlWofJQ) for instructions on how to install the compiler
@@ -16,17 +16,22 @@ The C++ Arithmetic Notation Converter is a program whose purpose is to convert a
     * Find the folder where the Repository is located
     * Once done, click OK, then close all windows
 
-## For Linux
+**For Linux**
+* Download then extract the Repository
+* Install a C++ Compiler by running the following commands
+    * sudo apt install mingw-w64 (for Ubuntu distros)
 
 # How to Run the Program
 
 To run the program:
 
-* Open the Command Prompt or any CLI (Command Line Interface)
+* Open the Terminal or Command Prompt
 * Move to the file directory containing the program, for example:
     * cd Projects/Arithmetic-Notation-Converter
+* Compile converter.cpp by typing the following command
+    * g++ converter.cpp -o converter
 * Use the following command:
-    * ./program {arg1} {arg2} {string} [-e]
+    * ./converter {arg1} {arg2} {string} [-e]
 
 ## Arguments Guide
 * {arg1} and {arg2} (NOTE: order of arguments MATTER):
