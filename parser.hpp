@@ -151,17 +151,17 @@ bool preexpr_pos(Token* q, int*curr){
 
 bool isValid(Token* q, int* curr, std::string arg){
     bool res;
-    if(arg == "-in"){
+    if(arg == "infix"){
         res = arith(q, curr);
     }
-    else if(arg == "-pos"){
+    else if(arg == "postfix"){
         res = posexpr(q, curr);
     }
-    else if(arg == "-pre"){
+    else if(arg == "prefix"){
         res = preexpr(q, curr);
     }
     else{
-        std::cout<< "Invalid arguments" <<std::endl;
+        std::cout<< "Error: Invalid arguments" <<std::endl;
     }
 
     if(q[*curr].t == END)
