@@ -26,7 +26,7 @@ The C++ Arithmetic Notation Converter is a program whose purpose is to convert a
 To run the program:
 
 * Open the Terminal or Command Prompt
-* Move to the file directory containing the program, for example:
+* Move to the file path containing the program, for example:
     * cd Projects/Arithmetic-Notation-Converter
 * Compile converter.cpp by typing the following command
     * *g++ converter.cpp -o converter*
