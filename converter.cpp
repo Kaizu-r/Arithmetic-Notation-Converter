@@ -70,9 +70,9 @@ void executeMethod(const string& arg1, const string& arg2, Node **root, Token *t
 }
 
 void printHelp() {
-    cout << "\n╔══════════════════════════════════════════════════════╗\n";
-    cout << "║              C++ Expression Parser Helper            ║\n";
-    cout << "╚══════════════════════════════════════════════════════╝\n\n";
+    cout << "\n/=====================================================\\\n";
+    cout << "|              C++ Expression Parser Helper            |\n";
+    cout << "\\=====================================================/\n\n";
     cout << "USAGE:\n";
     cout << "  ./program <arg1> <arg2> <string> [-e]\n\n";
     cout << "DESCRIPTION:\n";
@@ -91,7 +91,7 @@ void printHelp() {
     cout << "  -e               : Emphasize output (convert to uppercase).\n\n";
     cout << "HELP:\n";
     cout << "  ./program -help  : Show this help message\n\n";
-    cout << "════════════════════════════════════════════════════════\n";
+    cout << "=======================================================\n";
 }
 
 int main(int argc, char* argv[]) {
