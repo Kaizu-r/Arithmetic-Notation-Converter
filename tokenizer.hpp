@@ -10,7 +10,6 @@ typedef enum {
     SUBTRACT,
     DIVIDE,
     MULTIPLY,
-    POW,
     MOD,
     LEFT_P,
     RIGHT_P,
@@ -35,7 +34,6 @@ int isTokOperator(Token_t t){
         case SUBTRACT:
         case DIVIDE:
         case MULTIPLY:
-        case POW:
         case MOD:
             return 1;
     }
@@ -51,8 +49,6 @@ int precedence(Token_t t){
         case MOD:
         case DIVIDE:
             return 2;
-        case POW:
-            return 3;
         default:
             return 0;
     }
@@ -110,8 +106,6 @@ Token_t toOperator(char c){
             return MULTIPLY;
         case '/':
             return DIVIDE;
-        case '^':
-            return POW;
         case '%':
             return MOD;
     }
@@ -174,9 +168,6 @@ void printTok(Token_t t){
         case MULTIPLY:
             std::cout << "MULTIPLY";
             break;
-        case POW:
-            std::cout << "POW";
-            break;
         case MOD:
             std::cout << "MOD";
             break;
@@ -209,9 +200,6 @@ void printTokLiteral(Token t){
             break;
         case MULTIPLY:
             std::cout << '*';
-            break;
-        case POW:
-            std::cout << '^';
             break;
         case MOD:
             std::cout << '%';
