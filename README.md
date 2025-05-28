@@ -29,9 +29,9 @@ To run the program:
 * Move to the file directory containing the program, for example:
     * cd Projects/Arithmetic-Notation-Converter
 * Compile converter.cpp by typing the following command
-    * g++ converter.cpp -o converter
-* Use the following command:
-    * ./converter {arg1} {arg2} {string} [-e]
+    * *g++ converter.cpp -o converter*
+* Run the program by typing the following command:
+    * *./converter {arg1} {arg2} {string} [-e]*
 
 ## Arguments Guide
 * {arg1} and {arg2} (NOTE: order of arguments MATTER):
@@ -48,9 +48,9 @@ To run the program:
 
 # Programming Language Used and Dependencies Utilized
 
-The program is written entirely in C++, with the following dependencies used in the program:
-* stdlib.h : 
-* iostream : 
+The program is written entirely in C++, with the following dependencies used:
+* stdlib.h 
+* iostream 
 
 # Program Features
 
