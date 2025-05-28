@@ -125,7 +125,7 @@ void printHelp() {
     cout << "    postfix  infix     : Postfix and Infix strategy\n\n";
     cout << "  <string>             : The exression to be OPERATED.\n\n";
     cout << "OPTIONAL ARGUMENT:\n";
-    cout << "  -e                             : Emphasize output (convert to uppercase).\n\n";
+    cout << "  -e                             : Evaluate output.\n\n";
     cout << "HELP:\n";
     cout << "  converter {--help | -h}        : Show this help message\n\n";
     cout << "GUIDE:\n";

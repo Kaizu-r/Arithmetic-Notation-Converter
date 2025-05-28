@@ -48,7 +48,7 @@ To run the program:
 
 * {string}           : The expression to be OPERATED
 
-* [-e]               : [Optional Argument] Emphasize output, (converts ouput to UPPERCASE)
+* [-e]               : [Optional Argument] Evaluates the expression
 
 # Programming Language Used and Dependencies Utilized
 
