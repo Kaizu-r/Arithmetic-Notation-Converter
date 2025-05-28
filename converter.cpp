@@ -80,12 +80,12 @@ void printHelp() {
     cout << "  determine a printing method for the input string.\n\n";
     cout << "REQUIRED ARGUMENTS:\n";
     cout << "  <arg1> and <arg2> combinations (order DOES matter):\n";
-    cout << "    -infix    -prefix    : Infix and Prefix strategy\n";
-    cout << "    -prefix   -infix     : Prefix and Infix strategy\n";
-    cout << "    -postfix  -prefix    : Postfix and Prefix strategy\n";
-    cout << "    -prefix   -postfix   : Prefix and Postfix strategy\n";
-    cout << "    -infix    -postfix   : Infix and Postfix strategy\n";
-    cout << "    -postfix  -infix     : Postfix and Infix strategy\n\n";
+    cout << "    infix    prefix    : Infix and Prefix strategy\n";
+    cout << "    prefix   infix     : Prefix and Infix strategy\n";
+    cout << "    postfix  prefix    : Postfix and Prefix strategy\n";
+    cout << "    prefix   postfix   : Prefix and Postfix strategy\n";
+    cout << "    infix    postfix   : Infix and Postfix strategy\n";
+    cout << "    postfix  infix     : Postfix and Infix strategy\n\n";
     cout << "  <string>               : The exression to be OPERATED.\n\n";
     cout << "OPTIONAL ARGUMENT:\n";
     cout << "  -e                     : Emphasize output (convert to uppercase).\n\n";
