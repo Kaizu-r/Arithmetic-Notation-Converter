@@ -10,7 +10,7 @@ production rules
 arith -> term arith_pos
 arith_pos -> + term arith_pos | - term arith_pos | e
 term -> factor term_pos
-term_pos -> * factor term_pos | / factor term_pos | e
+term_pos -> * factor term_pos | / factor term_pos | % factor term_pos |e
 factor -> digit | (arith) | - digit
 */
 bool arith(Token* q, int *curr);
@@ -57,7 +57,7 @@ bool term(Token* q, int* curr){
 }
 
 bool term_pos(Token* q, int* curr){
-    if(q[*curr].t == MULTIPLY || q[*curr].t == DIVIDE){
+    if(q[*curr].t == MULTIPLY || q[*curr].t == DIVIDE || q[*curr].t == MOD){
         (*curr)++;
         if(factor(q, curr)){
             if(term_pos(q, curr))
