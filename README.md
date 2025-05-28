@@ -2,6 +2,19 @@
 
 The C++ Arithmetic Notation Converter is a program whose purpose is to convert a given arithmetic notation between three different arithmetic notations: infix, prefix, and postfix notations.
 
+## Installation Guide
+To install the program:
+* Download then extract the Repository
+* Install a C++ Compiler
+    * 
+* Set up the Environment Variables 
+    * Go to the Windows Search Bar, type "edit the system environment variables" then open
+    * Click "Environment Variables"
+    * Inside the User Variables, click "Path" then click "Edit..."
+    * Click New then click on Browse
+    * Find the folder where the Repository is located
+    * Once done, click OK, then close all windows
+
 ## How to Run the Program
 
 To run the program:
